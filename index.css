@@ -1,0 +1,63 @@
+.paper-main {
+  width: 340px;
+  left: 50%;
+  top: 40px;
+  padding: 16px 18px 20px;
+  transform: translateX(-50%) rotate(-1.2deg);
+  z-index: 4;
+  border-top: 3px solid #c0b090;
+}
+
+.paper-back-left {
+  width: 260px;
+  left: calc(50% - 260px);
+  top: 20px;
+  padding: 14px 14px 16px;
+  transform: rotate(-4deg);
+  z-index: 2;
+  opacity: 0.82;
+  background: #ede3cc;
+}
+
+.paper-back-right {
+  width: 280px;
+  left: calc(50% + 80px);
+  top: 15px;
+  padding: 14px 16px 18px;
+  transform: rotate(3.5deg);
+  z-index: 3;
+  opacity: 0.85;
+  background: #efe6d0;
+}
+
+.paper-snippet {
+  width: 180px;
+  left: calc(50% - 260px);
+  bottom: 60px;
+  padding: 10px 12px;
+  transform: rotate(-3deg);
+  z-index: 3;
+  opacity: 0.8;
+  background: #f0e8d2;
+}
+
+.paper-bottom {
+  width: 240px;
+  left: 50%;
+  bottom: 60px;
+  padding: 12px 14px;
+  transform: translateX(-50%) rotate(2deg);
+  z-index: 2;
+  opacity: 0.75;
+  background: #ece2ca;
+}
+
+.paper-protest {
+  width: 210px;
+  left: calc(50% + 120px);
+  bottom: 20px;
+  padding: 11px 13px;
+  transform: rotate(-2.5deg);
+  z-index: 5;
+  background: #f4ead5;
+}
