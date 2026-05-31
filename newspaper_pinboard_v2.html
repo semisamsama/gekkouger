@@ -1,0 +1,173 @@
+
+<style>
+  .board {
+    background: #8B7355;
+    padding: 28px 20px 32px;
+    border-radius: 6px;
+    position: relative;
+    min-height: 900px;
+  }
+  .board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    background: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 5px);
+  }
+  .paper-base {
+    background: #f2ead8;
+    color: #1a1a16;
+    font-family: 'Georgia', serif;
+    border: 0.5px solid #c0b090;
+    position: absolute;
+  }
+  .pin { width: 12px; height: 12px; border-radius: 50%; position: absolute; z-index: 10; border: 1px solid rgba(0,0,0,0.25); }
+  .pin-red { background: #c0392b; }
+  .pin-brass { background: #b8860b; }
+  .pin-gray { background: #7a7a72; }
+
+  .paper-main { width: 340px; left: 30px; top: 40px; padding: 16px 18px 20px; transform: rotate(-1.2deg); z-index: 4; border-top: 3px solid #c0b090; }
+  .paper-back-left { width: 260px; left: 10px; top: 20px; padding: 14px 14px 16px; transform: rotate(-4deg); z-index: 2; opacity: 0.82; background: #ede3cc; }
+  .paper-back-right { width: 280px; right: 18px; top: 15px; padding: 14px 16px 18px; transform: rotate(3.5deg); z-index: 3; opacity: 0.85; background: #efe6d0; }
+  .paper-bottom { width: 240px; right: 30px; bottom: 60px; padding: 12px 14px; transform: rotate(2deg); z-index: 2; opacity: 0.75; background: #ece2ca; }
+  .paper-snippet { width: 180px; left: 50px; bottom: 60px; padding: 10px 12px; transform: rotate(-3deg); z-index: 3; opacity: 0.8; background: #f0e8d2; }
+  .paper-protest { width: 210px; right: 22px; bottom: 20px; padding: 11px 13px; transform: rotate(-2.5deg); z-index: 5; background: #f4ead5; }
+
+  .masthead { text-align: center; border-bottom: 2.5px double #1a1a16; padding-bottom: 8px; margin-bottom: 6px; }
+  .masthead-name { font-size: 22px; font-weight: 700; letter-spacing: 0.07em; line-height: 1; }
+  .masthead-sub { display: flex; justify-content: space-between; font-size: 8px; color: #444; margin-top: 4px; letter-spacing: 0.03em; padding: 2px 0; border-top: 0.5px solid #1a1a16; border-bottom: 0.5px solid #1a1a16; }
+  .section-tag { text-align: center; font-size: 8px; letter-spacing: 0.18em; color: #5a5248; margin: 6px 0 8px; text-transform: uppercase; }
+  .headline-main { font-size: 14px; font-weight: 700; line-height: 1.25; text-align: center; margin-bottom: 3px; color: #1a1a16; }
+  .deck { font-size: 9px; font-style: italic; color: #3a3830; text-align: center; margin-bottom: 5px; border-bottom: 0.5px solid #b0a888; padding-bottom: 6px; }
+  .byline { font-size: 8px; letter-spacing: 0.05em; color: #5a5248; text-align: center; margin-bottom: 7px; text-transform: uppercase; }
+  .col-wrap { column-count: 2; column-gap: 14px; column-rule: 0.5px solid #b0a888; }
+  .body { font-size: 9px; line-height: 1.6; color: #1a1a16; text-align: justify; margin: 0 0 6px; hyphens: auto; }
+  .body:first-of-type::first-letter { font-size: 24px; font-weight: 700; float: left; line-height: 0.82; margin: 2px 3px 0 0; }
+  .pull { border-top: 1.5px solid #1a1a16; border-bottom: 1.5px solid #1a1a16; margin: 8px 0; padding: 5px 3px; font-size: 9.5px; font-style: italic; font-weight: 700; text-align: center; line-height: 1.4; color: #2a2820; }
+  .footer-note { font-size: 7.5px; color: #6a6458; border-top: 0.5px solid #b0a888; margin-top: 10px; padding-top: 5px; display: flex; justify-content: space-between; }
+
+  .filler-masthead { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-align: center; border-bottom: 2px double #1a1a16; padding-bottom: 5px; margin-bottom: 6px; }
+  .filler-sub { font-size: 7px; text-align: center; color: #555; margin-bottom: 6px; letter-spacing: 0.04em; border-bottom: 0.5px solid #aaa; padding-bottom: 3px; }
+  .filler-hed { font-size: 11px; font-weight: 700; line-height: 1.2; margin-bottom: 3px; color: #1a1a16; }
+  .filler-hed-sm { font-size: 9.5px; font-weight: 700; line-height: 1.2; margin-bottom: 2px; color: #1a1a16; }
+  .filler-deck { font-size: 8px; font-style: italic; color: #444; margin-bottom: 5px; }
+  .filler-body { font-size: 8px; line-height: 1.55; color: #1a1a16; text-align: justify; margin: 0 0 5px; hyphens: auto; }
+  .filler-col { column-count: 2; column-gap: 10px; column-rule: 0.5px solid #b0a888; }
+  .filler-rule { border: none; border-top: 0.5px solid #b0a888; margin: 7px 0; }
+  .torn-edge { position: absolute; bottom: -1px; left: 0; right: 0; height: 6px; background: #8B7355; clip-path: polygon(0% 100%, 3% 0%, 7% 80%, 11% 10%, 15% 70%, 19% 20%, 23% 90%, 27% 5%, 31% 75%, 36% 15%, 40% 85%, 44% 0%, 48% 70%, 52% 20%, 57% 95%, 61% 10%, 65% 80%, 69% 0%, 73% 90%, 77% 25%, 81% 75%, 85% 5%, 89% 85%, 93% 15%, 97% 70%, 100% 100%); }
+  .torn-left { position: absolute; right: -1px; top: 0; bottom: 0; width: 5px; background: #8B7355; clip-path: polygon(100% 0%, 0% 4%, 100% 8%, 0% 13%, 100% 18%, 0% 23%, 100% 28%, 0% 33%, 100% 39%, 0% 44%, 100% 50%, 0% 55%, 100% 60%, 0% 66%, 100% 71%, 0% 76%, 100% 82%, 0% 87%, 100% 93%, 0% 100%, 100% 100%); }
+  .crease { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(102deg, transparent 49.5%, rgba(0,0,0,0.04) 50%, transparent 50.5%); pointer-events: none; }
+  .stain { position: absolute; border-radius: 50%; background: rgba(120,90,40,0.07); pointer-events: none; }
+  .urgent-bar { background: #1a1a16; color: #f2ead8; font-size: 7.5px; font-weight: 700; letter-spacing: 0.12em; text-align: center; padding: 3px 0; margin-bottom: 7px; text-transform: uppercase; }
+</style>
+
+<div class="board">
+
+  <div class="paper-base paper-back-left">
+    <div class="pin pin-gray" style="top:-5px; left:50%; transform:translateX(-50%);"></div>
+    <div class="filler-masthead">Creta Daily Tribune</div>
+    <div class="filler-sub">Serving the Western Reaches Since 1872 &nbsp;|&nbsp; Korvosa, Issue 881</div>
+    <div class="filler-hed">Border skirmishes continue near Edra Pass; civilian movement restricted</div>
+    <div class="filler-deck">Third week of localised conflict — no formal declaration issued</div>
+    <div class="filler-body">Regional military authorities have extended travel restrictions along the Edra corridor for a third consecutive week, citing ongoing skirmishes between Cretan border units and what officials describe as "irregular Amestrian activity." Civilian transit between the eastern townships has been suspended indefinitely pending resolution. Merchants operating along the route report significant losses...</div>
+    <hr class="filler-rule">
+    <div class="filler-hed-sm">Supply delays reported at three forward garrisons</div>
+    <div class="filler-body">Quartermaster records reviewed by this paper indicate significant backlogs in medical supply delivery to forward installations, with wait times averaging four to six weeks above standard. Officials have attributed the delays to...</div>
+    <hr class="filler-rule">
+    <div class="filler-hed-sm">Council rejects motion on displaced persons transit</div>
+    <div class="filler-body">The Western Cretan Regional Council voted 7–4 against a motion that would have accelerated transit documentation for displaced persons currently sheltering in border-adjacent areas. Proponents argued that existing processing timelines were incompatible with deteriorating conditions in the camps...</div>
+    <div class="torn-edge"></div>
+  </div>
+
+  <div class="paper-base paper-back-right">
+    <div class="pin pin-brass" style="top:-5px; right:30px;"></div>
+    <div class="filler-masthead">The Amestrian Dispatch</div>
+    <div class="filler-sub">Eastern Edition &nbsp;|&nbsp; Vol. 44, No. 188 &nbsp;|&nbsp; Printed in East City</div>
+    <div class="filler-col">
+      <div>
+        <div class="filler-hed">State alchemist programme sees renewed funding under new parliamentary session</div>
+        <div class="filler-body">The parliamentary budget committee confirmed this week that the State Alchemist programme will receive its full allocation for the coming fiscal year, reversing uncertainty that had surrounded the programme following last autumn's inquiry. Details of individual assignments remain classified...</div>
+        <hr class="filler-rule">
+        <div class="filler-hed-sm">Eastern rail expansion delayed again</div>
+        <div class="filler-body">The extension of the eastern railway corridor has been pushed back to no earlier than spring, according to the Department of Infrastructure. Contractors cite material shortages and ongoing requisition delays affecting western-bound supply lines...</div>
+      </div>
+      <div>
+        <div class="filler-hed-sm">Obituaries</div>
+        <div class="filler-body" style="font-style:italic;">Col. Maren Oss, 67, retired, formerly of the 3rd Infantry. Survived by two daughters. Services private.<br><br>Pvt. Bence Tallo, 19, died of wounds sustained in border service. Family requests no correspondence.</div>
+        <hr class="filler-rule">
+        <div class="filler-hed-sm">Markets</div>
+        <div class="filler-body">Coal: 14.2c (+0.3) &nbsp; Grain: 8.1c (—) &nbsp; Iron ore: 21.6c (-0.8) &nbsp; Military supply contracts: closed session</div>
+      </div>
+    </div>
+    <div class="crease"></div>
+  </div>
+
+  <div class="paper-base paper-main">
+    <div class="pin pin-red" style="top:-6px; left:50%; transform:translateX(-50%);"></div>
+    <div class="stain" style="width:55px;height:40px;top:180px;right:10px;transform:rotate(20deg);"></div>
+    <div class="stain" style="width:30px;height:25px;bottom:60px;left:15px;"></div>
+    <div class="masthead">
+      <div class="masthead-name">The Eastern Courier</div>
+      <div class="masthead-sub">
+        <span>Independent Press — Est. 1881</span>
+        <span>One Cenz</span>
+        <span>Issue No. 214 &nbsp;|&nbsp; 14 Harvest, 1907</span>
+      </div>
+    </div>
+    <div class="section-tag">&#9670; &nbsp; Border Affairs &nbsp; &#9670;</div>
+    <div class="headline-main">Forgotten Posts: Who Is Watching the Watchers?</div>
+    <div class="deck">A correspondent's six-week attempt to visit a border installation raises questions nobody seems eager to answer</div>
+    <div class="byline">By Alden Rook &nbsp;|&nbsp; Staff Correspondent, Military Affairs</div>
+    <div class="col-wrap">
+      <p class="body">I have been trying, for six weeks now, to visit Fort Verano. This should not be a complicated matter.</p>
+      <p class="body">I am a credentialed correspondent. Fort Verano is a functioning Amestrian military installation on Cretan soil, subject — in theory — to standard press access protocols under the 1899 Border Operations Agreement. I have filed three formal access requests. Two were denied without stated reason. One has not been answered at all.</p>
+      <div class="pull">"Institutions that have nothing to hide generally tell you what they're hiding it for."</div>
+      <p class="body">I would not usually find this worth noting. Forward postings near contested borders have legitimate reasons to limit outside access. I have covered four comparable installations in the past two years. The paperwork was slow. It moved.</p>
+      <p class="body">What I cannot account for is the response from the administrative contact listed on Fort Verano's official filing, who informed me the installation "does not currently fall under standard press access protocols" — a classification that exists nowhere in any agreement I have been able to locate.</p>
+      <p class="body">I am also unable to account for two soldiers I attempted to contact — both of whom had written home about conditions at the fort recently. According to their families, both men have been transferred to postings that no available directory can locate. One family filed an inquiry three weeks ago. They are still waiting.</p>
+      <p class="body">I want to be precise. I have no evidence of wrongdoing at Fort Verano. I have only a consistent pattern of questions being redirected or going unanswered.</p>
+      <p class="body"><em>But when an institution has nothing to hide, it tells you what it is hiding, and why.</em></p>
+      <p class="body">This correspondent will continue to pursue access.</p>
+    </div>
+    <div class="footer-note">
+      <span>Rook covers military affairs for the Courier.</span>
+      <span>Correspondence: 14 Vance St., East City</span>
+    </div>
+  </div>
+
+  <div class="paper-base paper-snippet">
+    <div class="pin pin-brass" style="top:-5px; left:50%; transform:translateX(-50%);"></div>
+    <div class="filler-masthead" style="font-size:11px;">Cretan Border Watch</div>
+    <div class="filler-sub">Weekly Circular — Subscriber Edition</div>
+    <div class="filler-hed-sm">Migrant camp northeast of Verano region reported cleared</div>
+    <div class="filler-body">Transit authorities confirmed this week that the informal settlement housing approximately forty displaced persons northeast of the Verano garrison zone has been vacated. Officials stated residents were relocated through civilian transit channels. No further details were provided. Advocacy groups have requested confirmation of arrival at receiving settlements. As of press time no response has been issued.</div>
+    <div class="torn-edge"></div>
+  </div>
+
+  <div class="paper-base paper-bottom">
+    <div class="pin pin-gray" style="top:-5px; right:40px;"></div>
+    <div class="filler-masthead" style="font-size:12px;">The Vance Street Ledger</div>
+    <div class="filler-sub">Commerce & Public Affairs &nbsp;|&nbsp; East City</div>
+    <div class="filler-hed-sm">Military supply contracts — western border region</div>
+    <div class="filler-body">Three civilian logistics firms have been awarded short-term supply contracts for western border installations under a no-bid arrangement approved last quarter. The contracts, covering medical and chemical supply delivery, are listed under a discretionary procurement clause that does not require public tender. The firms involved have not been named in the public record. A parliamentary inquiry into the use of the discretionary clause was tabled in the spring session and has not been rescheduled.</div>
+    <div class="filler-body" style="font-style:italic; font-size:7.5px; color:#7a7060;">— continued p.6</div>
+    <div class="torn-edge"></div>
+  </div>
+
+  <div class="paper-base paper-protest">
+    <div class="pin pin-red" style="top:-6px; left:40%;"></div>
+    <div class="stain" style="width:40px;height:28px;bottom:30px;right:8px;transform:rotate(-10deg);"></div>
+    <div class="urgent-bar">&#9632; &nbsp; Late Edition &nbsp; &#9632;</div>
+    <div class="filler-masthead" style="font-size:12px;">West City Courier</div>
+    <div class="filler-sub">City & Regional Affairs &nbsp;|&nbsp; Vol. 29, No. 301</div>
+    <div class="filler-hed" style="font-size:12px; line-height:1.2;">Hundreds march on Governor's Office as anti-Ishvalan tensions mount in West City</div>
+    <div class="filler-deck" style="font-size:8px;">"Send them back" — demonstrators demand expulsion of Ishvalan residents from western districts</div>
+    <div class="filler-body">An estimated four hundred demonstrators gathered outside the West City Governor's Office on the morning of the 12th, demanding what organisers called "the removal of Ishvalan squatters from Amestrian soil." The march, which began at Kandor Square and proceeded along the central boulevard, was organised by a coalition of groups that have grown in visibility since the close of the Ishval conflict three years ago.</div>
+    <div class="filler-body">Governor's staff confirmed that the building was placed under restricted access during the demonstration. No statement was issued. City constables maintained a perimeter but made no arrests. The march dispersed by midday.</div>
+    <div class="filler-body">Ishvalan community representatives declined to comment publicly. A neighbourhood liaison, speaking on condition of anonymity, said residents of the western district had "been expecting something like this for some time."</div>
+    <div class="filler-body">This is the third demonstration of this kind in West City in as many months. Previous gatherings drew smaller crowds. Organisers indicated a larger action is being planned.</div>
+    <div class="filler-body" style="font-size:7.5px; font-style:italic; color:#6a6050; border-top: 0.5px solid #b0a888; padding-top: 4px; margin-top:4px;">Related: Ishvalan resettlement disputes continue across three districts — p.3 &nbsp;|&nbsp; Governor silent on relocation policy — p.4</div>
+    <div class="torn-left"></div>
+  </div>
+
+</div>
