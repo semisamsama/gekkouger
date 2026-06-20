@@ -1,173 +1,669 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鏡戦隊ゲッコウジャー — Kagami Sentai Gekkoujer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Sawarabi+Mincho&display=swap" rel="stylesheet">
 <style>
-  .board {
-    background: #8B7355;
-    padding: 28px 20px 32px;
-    border-radius: 6px;
-    position: relative;
-    min-height: 900px;
+  :root {
+    --ink: #0d0d12;
+    --paper: #f4efe6;
+    --paper2: #eae4d6;
+    --paper3: #e0d8c6;
+    --gold: #c9a84c;
+    --ash: #6b5d45;
+    --silver: #9aa0aa;
+
+    --red:    #b8392b;
+    --blue:   #21709e;
+    --orange: #c4671c;
+    --green:  #5a8a3c;
+    --purple: #6f3a93;
+    --pink:   #c5527a;
+    --gold-c: #c9a23a;
+    --steel:  #5e6c78;
   }
-  .board::before {
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+  }
+  body::before {
     content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 6px;
-    background: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.03) 4px, rgba(0,0,0,0.03) 5px);
+    position: fixed; inset: 0;
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 5px 5px;
+    pointer-events: none;
+    z-index: 0;
   }
-  .paper-base {
-    background: #f2ead8;
-    color: #1a1a16;
-    font-family: 'Georgia', serif;
-    border: 0.5px solid #c0b090;
-    position: absolute;
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ═══ MASTHEAD ═══ */
+  .masthead { background: var(--ink); border-bottom: 5px solid var(--gold); position: relative; z-index: 1; }
+  .masthead-grid { display: grid; grid-template-columns: 64px 1fr 120px; max-width: 1180px; margin: 0 auto; }
+  .masthead-vert {
+    writing-mode: vertical-rl; font-family: 'Noto Serif JP', serif; font-weight: 900;
+    font-size: 1.9rem; color: var(--gold); padding: 18px 12px;
+    border-right: 3px solid rgba(201,168,76,0.3); letter-spacing: 0.1em; line-height: 1;
   }
-  .pin { width: 12px; height: 12px; border-radius: 50%; position: absolute; z-index: 10; border: 1px solid rgba(0,0,0,0.25); }
-  .pin-red { background: #c0392b; }
-  .pin-brass { background: #b8860b; }
-  .pin-gray { background: #7a7a72; }
+  .masthead-body { padding: 22px 28px 20px; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+  .masthead-eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.38em; color: var(--silver); text-transform: uppercase; }
+  .masthead-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem,4.2vw,3.6rem); line-height: 0.88; color: #fff; letter-spacing: 0.04em; }
+  .masthead-title em { color: var(--gold); font-style: normal; }
+  .masthead-sub { font-family: 'Sawarabi Mincho', serif; font-size: 0.74rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; margin-top: 2px; }
+  .masthead-moon { display: flex; align-items: center; justify-content: center; border-left: 2px solid rgba(201,168,76,0.18); }
+  .moon { width: 76px; height: 76px; border-radius: 50%; background: radial-gradient(circle at 38% 36%, #f5efdf, #c0a058, #6a5020); box-shadow: 0 0 28px rgba(201,168,76,0.35), inset -6px -6px 16px rgba(0,0,0,0.35); }
 
-  .paper-main { width: 340px; left: 30px; top: 40px; padding: 16px 18px 20px; transform: rotate(-1.2deg); z-index: 4; border-top: 3px solid #c0b090; }
-  .paper-back-left { width: 260px; left: 10px; top: 20px; padding: 14px 14px 16px; transform: rotate(-4deg); z-index: 2; opacity: 0.82; background: #ede3cc; }
-  .paper-back-right { width: 280px; right: 18px; top: 15px; padding: 14px 16px 18px; transform: rotate(3.5deg); z-index: 3; opacity: 0.85; background: #efe6d0; }
-  .paper-bottom { width: 240px; right: 30px; bottom: 60px; padding: 12px 14px; transform: rotate(2deg); z-index: 2; opacity: 0.75; background: #ece2ca; }
-  .paper-snippet { width: 180px; left: 50px; bottom: 60px; padding: 10px 12px; transform: rotate(-3deg); z-index: 3; opacity: 0.8; background: #f0e8d2; }
-  .paper-protest { width: 210px; right: 22px; bottom: 20px; padding: 11px 13px; transform: rotate(-2.5deg); z-index: 5; background: #f4ead5; }
+  /* ═══ SECTION HEADER ═══ */
+  .sh { display: flex; align-items: baseline; gap: 12px; margin: 46px 0 16px; border-bottom: 3px solid var(--ink); padding-bottom: 8px; }
+  .sh-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 0.06em; }
+  .sh-jp { font-family: 'Noto Serif JP', serif; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; color: #666; }
+  .sh-line { flex: 1; height: 1px; background: rgba(0,0,0,0.12); }
+  .sh-note { font-size: 0.68rem; color: #999; font-style: italic; white-space: nowrap; }
 
-  .masthead { text-align: center; border-bottom: 2.5px double #1a1a16; padding-bottom: 8px; margin-bottom: 6px; }
-  .masthead-name { font-size: 22px; font-weight: 700; letter-spacing: 0.07em; line-height: 1; }
-  .masthead-sub { display: flex; justify-content: space-between; font-size: 8px; color: #444; margin-top: 4px; letter-spacing: 0.03em; padding: 2px 0; border-top: 0.5px solid #1a1a16; border-bottom: 0.5px solid #1a1a16; }
-  .section-tag { text-align: center; font-size: 8px; letter-spacing: 0.18em; color: #5a5248; margin: 6px 0 8px; text-transform: uppercase; }
-  .headline-main { font-size: 14px; font-weight: 700; line-height: 1.25; text-align: center; margin-bottom: 3px; color: #1a1a16; }
-  .deck { font-size: 9px; font-style: italic; color: #3a3830; text-align: center; margin-bottom: 5px; border-bottom: 0.5px solid #b0a888; padding-bottom: 6px; }
-  .byline { font-size: 8px; letter-spacing: 0.05em; color: #5a5248; text-align: center; margin-bottom: 7px; text-transform: uppercase; }
-  .col-wrap { column-count: 2; column-gap: 14px; column-rule: 0.5px solid #b0a888; }
-  .body { font-size: 9px; line-height: 1.6; color: #1a1a16; text-align: justify; margin: 0 0 6px; hyphens: auto; }
-  .body:first-of-type::first-letter { font-size: 24px; font-weight: 700; float: left; line-height: 0.82; margin: 2px 3px 0 0; }
-  .pull { border-top: 1.5px solid #1a1a16; border-bottom: 1.5px solid #1a1a16; margin: 8px 0; padding: 5px 3px; font-size: 9.5px; font-style: italic; font-weight: 700; text-align: center; line-height: 1.4; color: #2a2820; }
-  .footer-note { font-size: 7.5px; color: #6a6458; border-top: 0.5px solid #b0a888; margin-top: 10px; padding-top: 5px; display: flex; justify-content: space-between; }
+  /* ═══ EQUAL GRID SYSTEM — the backbone of the whole page ═══ */
+  .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 3px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
+  .mb { margin-bottom: 32px; }
 
-  .filler-masthead { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-align: center; border-bottom: 2px double #1a1a16; padding-bottom: 5px; margin-bottom: 6px; }
-  .filler-sub { font-size: 7px; text-align: center; color: #555; margin-bottom: 6px; letter-spacing: 0.04em; border-bottom: 0.5px solid #aaa; padding-bottom: 3px; }
-  .filler-hed { font-size: 11px; font-weight: 700; line-height: 1.2; margin-bottom: 3px; color: #1a1a16; }
-  .filler-hed-sm { font-size: 9.5px; font-weight: 700; line-height: 1.2; margin-bottom: 2px; color: #1a1a16; }
-  .filler-deck { font-size: 8px; font-style: italic; color: #444; margin-bottom: 5px; }
-  .filler-body { font-size: 8px; line-height: 1.55; color: #1a1a16; text-align: justify; margin: 0 0 5px; hyphens: auto; }
-  .filler-col { column-count: 2; column-gap: 10px; column-rule: 0.5px solid #b0a888; }
-  .filler-rule { border: none; border-top: 0.5px solid #b0a888; margin: 7px 0; }
-  .torn-edge { position: absolute; bottom: -1px; left: 0; right: 0; height: 6px; background: #8B7355; clip-path: polygon(0% 100%, 3% 0%, 7% 80%, 11% 10%, 15% 70%, 19% 20%, 23% 90%, 27% 5%, 31% 75%, 36% 15%, 40% 85%, 44% 0%, 48% 70%, 52% 20%, 57% 95%, 61% 10%, 65% 80%, 69% 0%, 73% 90%, 77% 25%, 81% 75%, 85% 5%, 89% 85%, 93% 15%, 97% 70%, 100% 100%); }
-  .torn-left { position: absolute; right: -1px; top: 0; bottom: 0; width: 5px; background: #8B7355; clip-path: polygon(100% 0%, 0% 4%, 100% 8%, 0% 13%, 100% 18%, 0% 23%, 100% 28%, 0% 33%, 100% 39%, 0% 44%, 100% 50%, 0% 55%, 100% 60%, 0% 66%, 100% 71%, 0% 76%, 100% 82%, 0% 87%, 100% 93%, 0% 100%, 100% 100%); }
-  .crease { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(102deg, transparent 49.5%, rgba(0,0,0,0.04) 50%, transparent 50.5%); pointer-events: none; }
-  .stain { position: absolute; border-radius: 50%; background: rgba(120,90,40,0.07); pointer-events: none; }
-  .urgent-bar { background: #1a1a16; color: #f2ead8; font-size: 7.5px; font-weight: 700; letter-spacing: 0.12em; text-align: center; padding: 3px 0; margin-bottom: 7px; text-transform: uppercase; }
+  /* generic equal card */
+  .card {
+    background: #fff; border: 3px solid var(--ink);
+    padding: 18px 20px; display: flex; flex-direction: column;
+  }
+
+  /* ═══ INTRO / CONCEPT ═══ */
+  .lede {
+    border: 3px solid var(--ink); background: #fff; margin-bottom: 32px;
+    padding: 26px 30px;
+  }
+  .lede p { font-size: 0.98rem; line-height: 1.8; color: #222; }
+  .lede p + p { margin-top: 12px; }
+  .lede .stamp {
+    display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; padding: 2px 9px; background: var(--ink); color: var(--gold); margin-bottom: 12px;
+  }
+
+  /* ═══ TIMELINE (origin story) — 4 equal steps ═══ */
+  .timeline-step {
+    background: #fff; border: 3px solid var(--ink); padding: 16px 18px;
+    display: flex; flex-direction: column; border-top: 5px solid var(--gold);
+  }
+  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 6px; font-weight: 700; }
+  .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; line-height: 1.05; margin-bottom: 8px; }
+  .step-jp { font-family: 'Noto Serif JP', serif; font-size: 0.68rem; color: #888; display:block; margin-bottom: 8px; }
+  .step-body { font-size: 0.76rem; line-height: 1.62; color: #333; }
+
+  /* ═══ ORG CARDS (Sun Church / Benefactor) ═══ */
+  .org-card { background: #fff; border: 3px solid var(--ink); padding: 20px 22px; border-top: 5px solid var(--ash); }
+  .org-tag { display: inline-block; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; padding: 2px 8px; background: var(--ash); color: #fff; margin-bottom: 10px; }
+  .org-jp { font-family: 'Noto Serif JP', serif; font-size: 0.95rem; font-weight: 900; display: block; color: #777; }
+  .org-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; letter-spacing: 0.06em; display: block; margin-bottom: 10px; }
+  .org-body { font-size: 0.8rem; line-height: 1.68; color: #333; }
+
+  /* ═══ RANGER CARDS — uniform 4×2, identical template ═══ */
+  .ranger-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; margin-bottom: 32px; }
+  .rc { background: #fff; border: 3px solid var(--ink); display: flex; flex-direction: column; transition: transform .12s; }
+  .rc:hover { transform: translateY(-2px); z-index: 2; }
+  .rc-bar { height: 5px; width: 100%; }
+  .rc-body { padding: 14px 15px 16px; flex: 1; display: flex; flex-direction: column; }
+  .rc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .rc-badge { font-size: 0.54rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 2px 7px; color: #fff; }
+  .rc-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; line-height: 1; opacity: 0.09; }
+  .rc-jp { font-family: 'Noto Serif JP', serif; font-size: 0.82rem; font-weight: 900; display: block; }
+  .rc-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.28rem; letter-spacing: 0.04em; line-height: 1.05; display: block; }
+  .rc-actor { font-size: 0.62rem; font-weight: 700; color: #777; letter-spacing: 0.04em; margin-top: 1px; }
+  .rc-meaning { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #999; margin: 3px 0 8px; }
+  .rc-trait { font-size: 0.68rem; line-height: 1.55; color: #444; margin-bottom: 10px; min-height: 48px; }
+  .rc-divider { height: 1px; background: rgba(0,0,0,0.09); margin: 8px 0; }
+  .rc-stat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+  .rc-stat-lbl { font-size: 0.54rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #aaa; }
+  .rc-stat-val { font-size: 0.72rem; font-weight: 600; text-align: right; max-width: 60%; }
+  .rc-atk { margin-top: 8px; padding: 7px 9px; background: var(--paper2); border-left: 3px solid; }
+  .rc-atk-lbl { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #999; display: block; }
+  .rc-atk-en { font-family: 'Bebas Neue', sans-serif; font-size: 0.92rem; letter-spacing: 0.05em; display: block; line-height: 1.1; }
+  .rc-atk-jp { font-family: 'Sawarabi Mincho', serif; font-size: 0.6rem; color: #888; display: block; margin-bottom: 3px; }
+  .rc-atk-desc { font-size: 0.66rem; line-height: 1.5; color: #444; }
+  .rc-upgrade { margin-top: 8px; padding: 7px 9px; background: var(--ink); color: var(--paper); }
+  .rc-upgrade-lbl { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
+  .rc-upgrade-name { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.06em; color: #fff; display: block; margin-bottom: 2px; }
+  .rc-upgrade-desc { font-size: 0.63rem; line-height: 1.5; color: rgba(244,239,230,0.72); }
+  .rc-solar-tag { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: var(--gold-c); padding: 1px 6px; margin-left: 6px; }
+
+  /* color helpers */
+  .bg-red{background:var(--red)} .bg-blue{background:var(--blue)} .bg-orange{background:var(--orange)}
+  .bg-green{background:var(--green)} .bg-purple{background:var(--purple)} .bg-pink{background:var(--pink)}
+  .bg-gold{background:var(--gold-c)} .bg-steel{background:var(--steel)}
+  .t-red{color:var(--red)} .t-blue{color:var(--blue)} .t-orange{color:var(--orange)}
+  .t-green{color:var(--green)} .t-purple{color:var(--purple)} .t-pink{color:var(--pink)}
+  .t-gold{color:var(--gold-c)} .t-steel{color:var(--steel)}
+  .bl-red{border-left-color:var(--red)} .bl-blue{border-left-color:var(--blue)} .bl-orange{border-left-color:var(--orange)}
+  .bl-green{border-left-color:var(--green)} .bl-purple{border-left-color:var(--purple)} .bl-pink{border-left-color:var(--pink)}
+  .bl-gold{border-left-color:var(--gold-c)} .bl-steel{border-left-color:var(--steel)}
+
+  /* ═══ ABILITIES — 3 equal ═══ */
+  .ability-card { background: #fff; border: 3px solid var(--ink); padding: 18px 20px; border-top: 5px solid var(--gold); }
+  .ability-jp { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 900; display: block; margin-bottom: 2px; }
+  .ability-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; display: block; margin-bottom: 4px; }
+  .ability-sub { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa; margin-bottom: 9px; display: block; }
+  .ability-desc { font-size: 0.76rem; line-height: 1.62; color: #444; }
+
+  /* ═══ MECHA — tiered but internally equal ═══ */
+  .mc { background: #fff; border: 3px solid var(--ink); padding: 18px 20px; }
+  .mc.primary { background: var(--ink); color: var(--paper); border-color: var(--gold); border-width: 3px; }
+  .mc.combined { background: var(--paper3); border-color: var(--gold); }
+  .mc-tag { display: inline-block; font-size: 0.54rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; padding: 2px 8px; margin-bottom: 9px; background: var(--gold); color: var(--ink); }
+  .mc-jp { font-family: 'Noto Serif JP', serif; font-size: 0.88rem; font-weight: 900; display: block; opacity: 0.55; }
+  .mc-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; letter-spacing: 0.05em; line-height: 1; display: block; margin-bottom: 8px; }
+  .mc.primary .mc-en { color: var(--gold); }
+  .mc-desc { font-size: 0.76rem; line-height: 1.62; opacity: 0.85; margin-bottom: 10px; }
+  .mc-ability-lbl { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 4px; }
+  .mc-ability-body { font-size: 0.72rem; line-height: 1.55; border-left: 2px solid var(--gold); padding-left: 9px; opacity: 0.85; }
+
+  /* ═══ SPOTLIGHT PANEL — used for Ultimate Form, Cathedral, Nanami ═══ */
+  .spotlight {
+    border: 4px solid var(--gold); padding: 30px 34px; margin-bottom: 32px;
+    position: relative; overflow: hidden;
+  }
+  .spotlight.dark { background: var(--ink); color: var(--paper); }
+  .spotlight.villain { background: #16100c; color: #ece2d4; border-color: var(--ash); }
+  .spotlight-watermark {
+    position: absolute; right: -10px; top: -10px; font-family: 'Noto Serif JP', serif;
+    font-size: 8.5rem; font-weight: 900; line-height: 1; pointer-events: none;
+  }
+  .spotlight.dark .spotlight-watermark { color: rgba(201,168,76,0.05); }
+  .spotlight.villain .spotlight-watermark { color: rgba(107,93,69,0.12); }
+  .spotlight-eyebrow { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .spotlight.dark .spotlight-eyebrow, .spotlight.villain .spotlight-eyebrow { color: var(--gold); }
+  .spotlight-jp { font-family: 'Noto Serif JP', serif; font-size: 1.05rem; font-weight: 900; display: block; margin-bottom: 4px; opacity: 0.6; }
+  .spotlight-en { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem,3.4vw,2.7rem); letter-spacing: 0.05em; line-height: 0.96; display: block; margin-bottom: 14px; color: var(--gold); }
+  .spotlight-intro { font-size: 0.82rem; line-height: 1.75; max-width: 680px; margin-bottom: 18px; opacity: 0.82; }
+  .spotlight-cols { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .spotlight-block-lbl { font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; color: var(--gold); display: block; margin-bottom: 5px; }
+  .spotlight-block-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+  .spotlight-block-body { font-size: 0.74rem; line-height: 1.65; opacity: 0.78; }
+
+  /* ═══ REFLECTION WAR matchup cards — 4 equal ═══ */
+  .war-card { background: #fff; border: 3px solid var(--ink); padding: 16px 18px; border-top: 5px solid var(--red); }
+  .war-vs { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+  .war-matchup { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.04em; line-height: 1.15; margin-bottom: 8px; }
+  .war-desc { font-size: 0.72rem; line-height: 1.55; color: #444; }
+
+  .callout {
+    background: var(--paper2); border: 3px solid var(--ink); border-left: 6px solid var(--gold);
+    padding: 16px 20px; margin-bottom: 32px; font-size: 0.8rem; line-height: 1.7; color: #222;
+  }
+  .callout strong { color: var(--ink); }
+
+  /* ═══ FOOTER ═══ */
+  footer { background: var(--ink); color: rgba(244,239,230,0.4); text-align: center; padding: 22px; font-size: 0.64rem; letter-spacing: 0.18em; border-top: 3px solid var(--gold); margin-top: 24px; }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 980px) {
+    .ranger-grid { grid-template-columns: repeat(2,1fr); }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .masthead-grid { grid-template-columns: 1fr; }
+    .masthead-vert { writing-mode: horizontal-tb; border-right: none; border-bottom: 3px solid var(--gold); font-size: 1.4rem; padding: 10px 18px; }
+    .masthead-moon { display: none; }
+    .ranger-grid { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .spotlight-cols { grid-template-columns: 1fr; }
+  }
 </style>
+</head>
+<body>
 
-<div class="board">
+<header class="masthead">
+  <div class="masthead-grid">
+    <div class="masthead-vert">鏡戦隊ゲッコウジャー</div>
+    <div class="masthead-body">
+      <div class="masthead-eyebrow">Unofficial Fan Encyclopedia · 完全解説</div>
+      <div class="masthead-title">KAGAMI SENTAI<br><em>GEKKOUJER</em></div>
+      <div class="masthead-sub">鏡に映した、光の戦士 — "Projected in the mirror, the warriors of light"</div>
+    </div>
+    <div class="masthead-moon"><div class="moon"></div></div>
+  </div>
+</header>
 
-  <div class="paper-base paper-back-left">
-    <div class="pin pin-gray" style="top:-5px; left:50%; transform:translateX(-50%);"></div>
-    <div class="filler-masthead">Creta Daily Tribune</div>
-    <div class="filler-sub">Serving the Western Reaches Since 1872 &nbsp;|&nbsp; Korvosa, Issue 881</div>
-    <div class="filler-hed">Border skirmishes continue near Edra Pass; civilian movement restricted</div>
-    <div class="filler-deck">Third week of localised conflict — no formal declaration issued</div>
-    <div class="filler-body">Regional military authorities have extended travel restrictions along the Edra corridor for a third consecutive week, citing ongoing skirmishes between Cretan border units and what officials describe as "irregular Amestrian activity." Civilian transit between the eastern townships has been suspended indefinitely pending resolution. Merchants operating along the route report significant losses...</div>
-    <hr class="filler-rule">
-    <div class="filler-hed-sm">Supply delays reported at three forward garrisons</div>
-    <div class="filler-body">Quartermaster records reviewed by this paper indicate significant backlogs in medical supply delivery to forward installations, with wait times averaging four to six weeks above standard. Officials have attributed the delays to...</div>
-    <hr class="filler-rule">
-    <div class="filler-hed-sm">Council rejects motion on displaced persons transit</div>
-    <div class="filler-body">The Western Cretan Regional Council voted 7–4 against a motion that would have accelerated transit documentation for displaced persons currently sheltering in border-adjacent areas. Proponents argued that existing processing timelines were incompatible with deteriorating conditions in the camps...</div>
-    <div class="torn-edge"></div>
+<main class="wrap">
+
+  <!-- CONCEPT -->
+  <div class="sh"><span class="sh-en">CONCEPT</span><span class="sh-jp">概要</span><span class="sh-line"></span></div>
+  <div class="lede">
+    <span class="stamp">Premise</span>
+    <p>Before they were a Sentai team, the Gekkoujer were a mercenary squad — six fighters taking contracts where they could find them. They commissioned a freelance weaponsmith named <strong>Yami</strong> to build their gear: a set of daggers called the Gekkou Burēdo, each capable of taking a <strong>Sentai Core</strong> — fragments of power Yami had spent years collecting and reconstructing from the legacies of past Sentai teams.</p>
+    <p>A frame-up changed everything. Hunted by three separate agencies for crimes they didn't fully commit, the squad fled Earth and settled in secret on the Moon. There, with nowhere left to run, they were declared something stranger than mercenaries: <strong>the Sentai team to end all Sentai teams.</strong> Their jobs didn't stop — they just got bigger, stranger, and increasingly directed by forces neither they nor Yami fully understand.</p>
   </div>
 
-  <div class="paper-base paper-back-right">
-    <div class="pin pin-brass" style="top:-5px; right:30px;"></div>
-    <div class="filler-masthead">The Amestrian Dispatch</div>
-    <div class="filler-sub">Eastern Edition &nbsp;|&nbsp; Vol. 44, No. 188 &nbsp;|&nbsp; Printed in East City</div>
-    <div class="filler-col">
+  <!-- ORIGIN TIMELINE -->
+  <div class="sh"><span class="sh-en">FORMATION</span><span class="sh-jp">結成までの軌跡</span><span class="sh-line"></span><span class="sh-note">chronological</span></div>
+  <div class="grid-4 mb">
+    <div class="timeline-step">
+      <span class="step-num">STEP 01</span>
+      <span class="step-title">The Squad</span>
+      <span class="step-jp">傭兵時代</span>
+      <p class="step-body">Six mercenaries take contracts across the underworld. Among the trainees who once passed through SPD together are <strong>Hayashi Takeomi</strong>, <strong>Yami</strong>, and <strong>Nanami Takahashi</strong> — three names that will matter far more later.</p>
+    </div>
+    <div class="timeline-step">
+      <span class="step-num">STEP 02</span>
+      <span class="step-title">The Weaponsmith</span>
+      <span class="step-jp">武器商人ヤミ</span>
+      <p class="step-body">The squad commissions Yami, an outside contractor, to build their gear. He saves their lives more than once before formally joining their ranks as their swordsman.</p>
+    </div>
+    <div class="timeline-step">
+      <span class="step-num">STEP 03</span>
+      <span class="step-title">The Frame-Up</span>
+      <span class="step-jp">濡れ衣</span>
+      <p class="step-body">Nanami vanishes. Around the same time, Gokaiger's ranger keys go missing, an SPD prisoner escapes, and Patranger ties the squad to a botched museum heist where a ring resembling AkaRed disappeared. Hunted on three fronts, they run.</p>
+    </div>
+    <div class="timeline-step">
+      <span class="step-num">STEP 04</span>
+      <span class="step-title">Exile</span>
+      <span class="step-jp">月への逃亡</span>
+      <p class="step-body">They settle in secret on the Moon. With no way back and no one left to answer to, they're pronounced a Sentai team — not chosen by destiny, but by elimination of every other option.</p>
+    </div>
+  </div>
+
+  <!-- SUN CHURCH / BENEFACTOR -->
+  <div class="sh"><span class="sh-en">UNKNOWN FORCES</span><span class="sh-jp">不明の組織</span><span class="sh-line"></span></div>
+  <div class="grid-2 mb">
+    <div class="org-card">
+      <span class="org-tag">Religious Order</span>
+      <span class="org-jp">太陽教会</span>
+      <span class="org-en">The Sun Church</span>
+      <p class="org-body">A mysterious order whose full doctrine and goals remain unclear. They maintain a cathedral that surfaces repeatedly in the Gekkoujer's path — including, eventually, as the site of a confrontation no one saw coming. Whether they have any real connection to the Solar Rangers' power is, as of yet, unconfirmed.</p>
+    </div>
+    <div class="org-card">
+      <span class="org-tag">Anonymous</span>
+      <span class="org-jp">依頼主</span>
+      <span class="org-en">The Benefactor</span>
+      <p class="org-body">There is no monster-of-the-week here — there's a mysterious third party who keeps handing the squad jobs. Each mission pits the Gekkoujer against a past Sentai team or a past Sentai villain, and it's through these clashes — not divine selection — that each Ranger comes to wield the power of a Sentai Core.</p>
+    </div>
+  </div>
+
+  <!-- RANGER ROSTER -->
+  <div class="sh"><span class="sh-en">THE ROSTER</span><span class="sh-jp">隊員一覧</span><span class="sh-line"></span><span class="sh-note">8 members</span></div>
+
+  <div class="ranger-grid">
+
+    <!-- SHOKU -->
+    <div class="rc">
+      <div class="rc-bar bg-red"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-red">Red</span><span class="rc-num t-red">01</span></div>
+        <span class="rc-jp">月光蝕</span>
+        <span class="rc-en t-red">Gekkou Shoku</span>
+        <span class="rc-actor">Yami</span>
+        <div class="rc-meaning">Eclipse</div>
+        <p class="rc-trait">Once an outside contractor hired to build the squad's weapons. Rescued them more than once before formally joining as their swordsman. Collector and rebuilder of every Sentai Core in existence.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Longsword</span></div>
+        <div class="rc-atk bl-red">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-red">Eclipse Edge</span>
+          <span class="rc-atk-jp">蝕刃 (Shoku-jin)</span>
+          <p class="rc-atk-desc">A single devastating slash that forms a blade of pure reflected light.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Shoku Ryūshi (蝕粒子)</span>
+          <p class="rc-upgrade-desc">Creates perfect shadow clones that mimic any teammate's movements and attacks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEIRAN -->
+    <div class="rc">
+      <div class="rc-bar bg-blue"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-blue">Blue</span><span class="rc-num t-blue">02</span></div>
+        <span class="rc-jp">月光晴嵐</span>
+        <span class="rc-en t-blue">Gekkou Seiran</span>
+        <span class="rc-actor">Hayashi Takeomi</span>
+        <div class="rc-meaning">Clear Sky</div>
+        <p class="rc-trait">Team leader. Trained at SPD alongside Yami and Nanami long before any of this began — a history she rarely brings up, and one that's about to matter a great deal.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Spear</span></div>
+        <div class="rc-atk bl-blue">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-blue">Seiran Gale</span>
+          <span class="rc-atk-jp">晴嵐疾風 (Seiran Shippū)</span>
+          <p class="rc-atk-desc">A whirlwind of reflected light from a spear spun at extreme velocity.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Seiran Ryūshi (晴嵐粒子)</span>
+          <p class="rc-upgrade-desc">Near-instant movement; spear strikes create a vacuum that pulls enemies in.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHUUKAKU -->
+    <div class="rc">
+      <div class="rc-bar bg-orange"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-orange">Orange</span><span class="rc-num t-orange">03</span></div>
+        <span class="rc-jp">月光収穫</span>
+        <span class="rc-en t-orange">Gekkou Shuukaku</span>
+        <span class="rc-actor">Hayashi Inou</span>
+        <div class="rc-meaning">Harvest Moon</div>
+        <p class="rc-trait">Takeomi's younger sister. Functions as a near-secondary leader, though her youth shows — naive and quick to anger, she's still growing into the role.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Glaive</span></div>
+        <div class="rc-atk bl-orange">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-orange">Harvest Reap</span>
+          <span class="rc-atk-jp">収穫薙 (Shuukaku Nagi)</span>
+          <p class="rc-atk-desc">A wide sweeping arc of the glaive that drains the energy of every enemy it crosses.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Shuukaku Ryūshi (収穫粒子)</span>
+          <p class="rc-upgrade-desc">Each arc drains life-force outright, channeling it to teammates to heal or supercharge them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANGETSU -->
+    <div class="rc">
+      <div class="rc-bar bg-green"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-green">Green</span><span class="rc-num t-green">04</span></div>
+        <span class="rc-jp">月光満月</span>
+        <span class="rc-en t-green">Gekkou Mangetsu</span>
+        <span class="rc-actor">Wakaki Otojiro</span>
+        <div class="rc-meaning">Full Moon</div>
+        <p class="rc-trait">Quiet and sharp. While everyone else swings for the kill, he's the one tracking angles and exits — making sure nobody gets hurt even when a job goes sideways.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Bow</span></div>
+        <div class="rc-atk bl-green">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-green">Full Moon Barrage</span>
+          <span class="rc-atk-jp">満月連撃 (Mangetsu Rengeki)</span>
+          <p class="rc-atk-desc">A rapid volley of arrows, each one a concentrated burst of moonlight.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Mangetsu Ryūshi (満月粒子)</span>
+          <p class="rc-upgrade-desc">The bow becomes a beacon, charging a single devastating shot that can vaporize obstacles outright.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIKAZUKI -->
+    <div class="rc">
+      <div class="rc-bar bg-purple"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-purple">Purple</span><span class="rc-num t-purple">05</span></div>
+        <span class="rc-jp">月光三日月</span>
+        <span class="rc-en t-purple">Gekkou Mikazuki</span>
+        <span class="rc-actor">Taguchi Asuka</span>
+        <div class="rc-meaning">Crescent Moon</div>
+        <p class="rc-trait">The second-youngest of the squad and easily the nimblest. Quick hands, quicker mouth — more than one job has gone wrong because of something he started.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Dual Baton / Dagger</span></div>
+        <div class="rc-atk bl-purple">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-purple">Crescent Flurry</span>
+          <span class="rc-atk-jp">三日月乱舞 (Mikazuki Ranbu)</span>
+          <p class="rc-atk-desc">A rapid flurry of dual-blade strikes that converge into a crescent-shaped burst of light.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Mikazuki Ryūshi (三日月粒子)</span>
+          <p class="rc-upgrade-desc">Twin blades bend reflected moonlight into curved arcs, striking from impossible angles.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HANAZUKI -->
+    <div class="rc">
+      <div class="rc-bar bg-pink"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-pink">Pink</span><span class="rc-num t-pink">06</span></div>
+        <span class="rc-jp">月光花月</span>
+        <span class="rc-en t-pink">Gekkou Hanazuki</span>
+        <span class="rc-actor">Takahashi Yui</span>
+        <div class="rc-meaning">Flower Moon</div>
+        <p class="rc-trait">The team's heart. A small frame swinging a weapon nearly as tall as she is — the classic mismatch that nobody underestimates twice.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">War Axe</span></div>
+        <div class="rc-atk bl-pink">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-pink">Flower Bloom Cleave</span>
+          <span class="rc-atk-jp">花月斬 (Hanazuki-giri)</span>
+          <p class="rc-atk-desc">One heavy axe strike that bursts into a wave of radiant, purifying petal-light.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Hanazuki Ryūshi (花月粒子)</span>
+          <p class="rc-upgrade-desc">Slamming the axe down erects a multi-layered barrier, projectable to shield teammates remotely.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HINODE -->
+    <div class="rc">
+      <div class="rc-bar bg-gold"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-gold" style="color:#2a2000;">Gold<span class="rc-solar-tag">SOLAR</span></span><span class="rc-num t-gold">07</span></div>
+        <span class="rc-jp">輝き日の出</span>
+        <span class="rc-en t-gold">Kagayaki Hinode</span>
+        <span class="rc-actor">Himeno Ran</span>
+        <div class="rc-meaning">Sunrise</div>
+        <p class="rc-trait">Sole survivor of a homeworld that no longer exists. Carried to Earth aboard the Kamakiri mecha, which vanished from sight the moment she arrived safely.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Rapier</span></div>
+        <div class="rc-atk bl-gold">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-gold">Sunrise Pierce</span>
+          <span class="rc-atk-jp">日の出穿 (Hinode-ugachi)</span>
+          <p class="rc-atk-desc">A blindingly fast lunge leaving a trail of burning light.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Hinode Ryūshi (日の出粒子)</span>
+          <p class="rc-upgrade-desc">Fires concentrated balls of reflected sun energy that explode on impact.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZANKOU -->
+    <div class="rc">
+      <div class="rc-bar bg-steel"></div>
+      <div class="rc-body">
+        <div class="rc-top"><span class="rc-badge bg-steel">Silver<span class="rc-solar-tag">SOLAR</span></span><span class="rc-num t-steel">08</span></div>
+        <span class="rc-jp">輝き残光</span>
+        <span class="rc-en t-steel">Kagayaki Zankou</span>
+        <span class="rc-actor">Yasue Kobo</span>
+        <div class="rc-meaning">Afterglow</div>
+        <p class="rc-trait">Yami's old supplier of parts and scrap, long before any of this had a name. Knows where every Sentai Core fragment came from — because he sold most of them to Yami himself.</p>
+        <div class="rc-divider"></div>
+        <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Gun</span></div>
+        <div class="rc-atk bl-steel">
+          <span class="rc-atk-lbl">Special Attack</span>
+          <span class="rc-atk-en t-steel">Afterglow Shot</span>
+          <span class="rc-atk-jp">残光弾 (Zankō-dan)</span>
+          <p class="rc-atk-desc">A shot that marks the target with lingering light, draining and paralyzing them.</p>
+        </div>
+        <div class="rc-upgrade">
+          <span class="rc-upgrade-lbl">Upgrade — Zankou Ryūshi (残光粒子)</span>
+          <p class="rc-upgrade-desc">Bullets leave energy trails that persist long after impact, deepening the drain.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /ranger-grid -->
+
+  <!-- UTILITY ABILITIES -->
+  <div class="sh"><span class="sh-en">UTILITY ABILITIES</span><span class="sh-jp">共通能力</span><span class="sh-line"></span><span class="sh-note">shared by all 8</span></div>
+  <div class="grid-3 mb">
+    <div class="ability-card">
+      <span class="ability-jp">月光瞬歩</span>
+      <span class="ability-en">Gekkou Shunpo</span>
+      <span class="ability-sub">Moonlight Instant Step</span>
+      <p class="ability-desc">A short-range teleport or burst of super-speed, letting any Gekkoujer reposition instantly mid-fight.</p>
+    </div>
+    <div class="ability-card">
+      <span class="ability-jp">月光共鳴</span>
+      <span class="ability-en">Gekkou Kyomei</span>
+      <span class="ability-sub">Moonlight Resonance</span>
+      <p class="ability-desc">A heightened sense that picks up hidden enemies, residual power signatures, or an ambush before it lands.</p>
+    </div>
+    <div class="ability-card">
+      <span class="ability-jp">月光反射</span>
+      <span class="ability-en">Gekkou Hansha</span>
+      <span class="ability-sub">Moonlight Reflection</span>
+      <p class="ability-desc">A defensive barrier of reflected moonlight — energy attacks that strike it are sent straight back at the attacker.</p>
+    </div>
+  </div>
+
+  <!-- ULTIMATE FORM -->
+  <div class="sh"><span class="sh-en">ULTIMATE FORM</span><span class="sh-jp">究極形態</span><span class="sh-line"></span></div>
+  <div class="spotlight dark">
+    <div class="spotlight-watermark">王蝕</div>
+    <div class="spotlight-eyebrow">Gekkou Shoku Exclusive · All 8 Sentai Cores</div>
+    <span class="spotlight-jp">月光王蝕</span>
+    <span class="spotlight-en">Gekkou Ōshoku — "Moonlight King Eclipse"</span>
+    <p class="spotlight-intro">Achieved by channeling all eight Sentai Cores at once — fitting, for the one member who started this team as an outsider. The suit turns brilliant silver with crimson trim, pulsing with moon-like radiance. He wields a massive two-handed sword forged from pure reflected light.</p>
+    <div class="spotlight-cols">
       <div>
-        <div class="filler-hed">State alchemist programme sees renewed funding under new parliamentary session</div>
-        <div class="filler-body">The parliamentary budget committee confirmed this week that the State Alchemist programme will receive its full allocation for the coming fiscal year, reversing uncertainty that had surrounded the programme following last autumn's inquiry. Details of individual assignments remain classified...</div>
-        <hr class="filler-rule">
-        <div class="filler-hed-sm">Eastern rail expansion delayed again</div>
-        <div class="filler-body">The extension of the eastern railway corridor has been pushed back to no earlier than spring, according to the Department of Infrastructure. Contractors cite material shortages and ongoing requisition delays affecting western-bound supply lines...</div>
+        <span class="spotlight-block-lbl">Ultimate Ability</span>
+        <span class="spotlight-block-title">Mirror of the Cosmos (宇宙の鏡)</span>
+        <p class="spotlight-block-body">Reflects not just physical attacks but an enemy's own despair and darkness — turning their worst weapon back on them.</p>
       </div>
       <div>
-        <div class="filler-hed-sm">Obituaries</div>
-        <div class="filler-body" style="font-style:italic;">Col. Maren Oss, 67, retired, formerly of the 3rd Infantry. Survived by two daughters. Services private.<br><br>Pvt. Bence Tallo, 19, died of wounds sustained in border service. Family requests no correspondence.</div>
-        <hr class="filler-rule">
-        <div class="filler-hed-sm">Markets</div>
-        <div class="filler-body">Coal: 14.2c (+0.3) &nbsp; Grain: 8.1c (—) &nbsp; Iron ore: 21.6c (-0.8) &nbsp; Military supply contracts: closed session</div>
+        <span class="spotlight-block-lbl">Final Attack</span>
+        <span class="spotlight-block-title">Ōshoku Kagami-gaeshi (王蝕鏡返し)</span>
+        <p class="spotlight-block-body">An upgraded version of the team finisher — a single wave of purifying energy that clears the battlefield outright.</p>
       </div>
     </div>
-    <div class="crease"></div>
   </div>
 
-  <div class="paper-base paper-main">
-    <div class="pin pin-red" style="top:-6px; left:50%; transform:translateX(-50%);"></div>
-    <div class="stain" style="width:55px;height:40px;top:180px;right:10px;transform:rotate(20deg);"></div>
-    <div class="stain" style="width:30px;height:25px;bottom:60px;left:15px;"></div>
-    <div class="masthead">
-      <div class="masthead-name">The Eastern Courier</div>
-      <div class="masthead-sub">
-        <span>Independent Press — Est. 1881</span>
-        <span>One Cenz</span>
-        <span>Issue No. 214 &nbsp;|&nbsp; 14 Harvest, 1907</span>
+  <!-- MECHA -->
+  <div class="sh"><span class="sh-en">MECHA</span><span class="sh-jp">メカ</span><span class="sh-line"></span></div>
+
+  <div class="callout"><strong>Note:</strong> every Sentai Core carries mecha-tier power on its own. This is why a single Ranger — Seiran or Shoku, most notably — can hold a line against an entire rival team without a giant robot involved at all. The mecha below are what happens when that power scales up further.</div>
+
+  <div class="grid-1 mb" style="display:flex; flex-direction:column; gap:3px;">
+    <div class="mc primary">
+      <span class="mc-tag">Primary · Core Six</span>
+      <span class="mc-jp">カガミオー</span>
+      <span class="mc-en">Kagami-Ō — "Mirror King"</span>
+      <p class="mc-desc">The six core Rangers pilot the Gekkou Sentai Spaceship for travel and battle. In stable orbit it becomes the <strong>Gekkou Fortress</strong>, their home base on the Moon. In combat, it becomes the giant robot Kagami-Ō.</p>
+      <span class="mc-ability-lbl">Special Abilities</span>
+      <p class="mc-ability-body">Mirrored chest plates absorb incoming fire and return it as the <strong>Moonlight Ray</strong>. Finisher: <strong>Kagami-Ō Gekkou Slash.</strong></p>
+    </div>
+
+    <div class="grid-2">
+      <div class="mc">
+        <span class="mc-tag">Solar · Hinode</span>
+        <span class="mc-jp">輝き閃光</span>
+        <span class="mc-en">Kagayaki-Senkou</span>
+        <p class="mc-desc">A sleek gold fighter jet, built in part from salvage off the original Kamakiri mecha — the same vessel that carried Ran to Earth. Its two-part body and blade-like wings echo that origin.</p>
+        <span class="mc-ability-lbl">Role</span>
+        <p class="mc-ability-body">High-speed aerial support. Combines with Kagayaki-Aka.</p>
+      </div>
+      <div class="mc">
+        <span class="mc-tag">Solar · Zankou</span>
+        <span class="mc-jp">輝き痕</span>
+        <span class="mc-en">Kagayaki-Aka</span>
+        <p class="mc-desc">A silver artillery vehicle built around a long-range cannon — practical, heavy, and exactly what you'd expect from Kobo's old scrapyard instincts.</p>
+        <span class="mc-ability-lbl">Role</span>
+        <p class="mc-ability-body">Heavy ranged support. Combines with Kagayaki-Senkou.</p>
       </div>
     </div>
-    <div class="section-tag">&#9670; &nbsp; Border Affairs &nbsp; &#9670;</div>
-    <div class="headline-main">Forgotten Posts: Who Is Watching the Watchers?</div>
-    <div class="deck">A correspondent's six-week attempt to visit a border installation raises questions nobody seems eager to answer</div>
-    <div class="byline">By Alden Rook &nbsp;|&nbsp; Staff Correspondent, Military Affairs</div>
-    <div class="col-wrap">
-      <p class="body">I have been trying, for six weeks now, to visit Fort Verano. This should not be a complicated matter.</p>
-      <p class="body">I am a credentialed correspondent. Fort Verano is a functioning Amestrian military installation on Cretan soil, subject — in theory — to standard press access protocols under the 1899 Border Operations Agreement. I have filed three formal access requests. Two were denied without stated reason. One has not been answered at all.</p>
-      <div class="pull">"Institutions that have nothing to hide generally tell you what they're hiding it for."</div>
-      <p class="body">I would not usually find this worth noting. Forward postings near contested borders have legitimate reasons to limit outside access. I have covered four comparable installations in the past two years. The paperwork was slow. It moved.</p>
-      <p class="body">What I cannot account for is the response from the administrative contact listed on Fort Verano's official filing, who informed me the installation "does not currently fall under standard press access protocols" — a classification that exists nowhere in any agreement I have been able to locate.</p>
-      <p class="body">I am also unable to account for two soldiers I attempted to contact — both of whom had written home about conditions at the fort recently. According to their families, both men have been transferred to postings that no available directory can locate. One family filed an inquiry three weeks ago. They are still waiting.</p>
-      <p class="body">I want to be precise. I have no evidence of wrongdoing at Fort Verano. I have only a consistent pattern of questions being redirected or going unanswered.</p>
-      <p class="body"><em>But when an institution has nothing to hide, it tells you what it is hiding, and why.</em></p>
-      <p class="body">This correspondent will continue to pursue access.</p>
-    </div>
-    <div class="footer-note">
-      <span>Rook covers military affairs for the Courier.</span>
-      <span>Correspondence: 14 Vance St., East City</span>
+
+    <div class="mc combined">
+      <span class="mc-tag">Combined Form</span>
+      <span class="mc-jp" style="opacity:0.5;">輝き人</span>
+      <span class="mc-en" style="color:var(--ink);">Kagayaki-Jin — "Radiant Human"</span>
+      <p class="mc-desc" style="color:#333; opacity:1;">Faster and more agile than Kagami-Ō, formed when the two Solar mecha combine. Acts as a secondary support fighter, striking from angles the Mirror King can't reach.</p>
+      <span class="mc-ability-lbl" style="color:var(--ash);">Role</span>
+      <p class="mc-ability-body" style="color:#333; opacity:1; border-left-color: var(--ash);">High-agility hybrid melee/ranged assault.</p>
     </div>
   </div>
 
-  <div class="paper-base paper-snippet">
-    <div class="pin pin-brass" style="top:-5px; left:50%; transform:translateX(-50%);"></div>
-    <div class="filler-masthead" style="font-size:11px;">Cretan Border Watch</div>
-    <div class="filler-sub">Weekly Circular — Subscriber Edition</div>
-    <div class="filler-hed-sm">Migrant camp northeast of Verano region reported cleared</div>
-    <div class="filler-body">Transit authorities confirmed this week that the informal settlement housing approximately forty displaced persons northeast of the Verano garrison zone has been vacated. Officials stated residents were relocated through civilian transit channels. No further details were provided. Advocacy groups have requested confirmation of arrival at receiving settlements. As of press time no response has been issued.</div>
-    <div class="torn-edge"></div>
+  <!-- REFLECTION WAR -->
+  <div class="sh"><span class="sh-en">THE REFLECTION WAR</span><span class="sh-jp">鏡の戦争</span><span class="sh-line"></span><span class="sh-note">mid-season arc</span></div>
+  <div class="lede" style="margin-bottom: 3px;">
+    <p>Months into their exile, Nanami resurfaces — not to rejoin them, but to turn four entire Sentai teams against them at once. Her real target was never the Gekkoujer themselves: it's Yami's full Sentai Core collection, and this is how she pries the team apart long enough to take it.</p>
+  </div>
+  <div class="grid-4" style="margin-bottom: 16px;">
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Gokaiger</div>
+      <p class="war-desc">Engaged by a paired set of Gekkoujer — pirates against mercenaries, neither side holding back.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Dekaranger</div>
+      <p class="war-desc">A second pair holds the line — old SPD instincts on both sides of the fight.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Timeranger</div>
+      <p class="war-desc">A third pair, caught in a fight neither team fully understands the cause of.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Gozyuger</div>
+      <p class="war-desc">The fourth pair. Meanwhile, Seiran and Shoku each break off to hold an entire rival team alone.</p>
+    </div>
+  </div>
+  <div class="callout">During the chaos, a massive mecha fielded by Nanami nearly overwhelms the field — until the long-vanished <strong>Kamakiri mecha</strong> resurfaces to help hold it back, finally revealing <strong>Himeno Ran</strong> to the rest of the team. While the others fight for ground, <strong>Yami and Nanami clash directly</strong> for the first time since she vanished. The battle ends with no clear victor on either side.</div>
+
+  <!-- CATHEDRAL CONFRONTATION -->
+  <div class="sh"><span class="sh-en">THE CATHEDRAL CONFRONTATION</span><span class="sh-jp">大聖堂の対峙</span><span class="sh-line"></span></div>
+  <div class="spotlight dark">
+    <div class="spotlight-watermark">対峙</div>
+    <div class="spotlight-eyebrow">Aftermath · Yami vs. Nanami</div>
+    <span class="spotlight-jp">大聖堂</span>
+    <span class="spotlight-en">The Sun Church Cathedral</span>
+    <p class="spotlight-intro">After the Reflection War settles with nothing resolved, Yami tracks Nanami to a cathedral kept by the Sun Church. What happens there is a private fight, not a battle — and it ends in two reveals neither of them saw coming.</p>
+    <div class="spotlight-cols">
+      <div>
+        <span class="spotlight-block-lbl">Reveal — Nanami</span>
+        <span class="spotlight-block-title">A Fallen Gosei Angel</span>
+        <p class="spotlight-block-body">Beneath the mercenary, beneath the swordsman — something far older and far less human than anyone on the squad ever guessed.</p>
+      </div>
+      <div>
+        <span class="spotlight-block-lbl">Reveal — Yami</span>
+        <span class="spotlight-block-title">A Gorma Tribe Descendant</span>
+        <p class="spotlight-block-body">The man who rebuilt the legacy of every past Sentai team turns out to carry the blood of one of their oldest enemies.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="paper-base paper-bottom">
-    <div class="pin pin-gray" style="top:-5px; right:40px;"></div>
-    <div class="filler-masthead" style="font-size:12px;">The Vance Street Ledger</div>
-    <div class="filler-sub">Commerce & Public Affairs &nbsp;|&nbsp; East City</div>
-    <div class="filler-hed-sm">Military supply contracts — western border region</div>
-    <div class="filler-body">Three civilian logistics firms have been awarded short-term supply contracts for western border installations under a no-bid arrangement approved last quarter. The contracts, covering medical and chemical supply delivery, are listed under a discretionary procurement clause that does not require public tender. The firms involved have not been named in the public record. A parliamentary inquiry into the use of the discretionary clause was tabled in the spring session and has not been rescheduled.</div>
-    <div class="filler-body" style="font-style:italic; font-size:7.5px; color:#7a7060;">— continued p.6</div>
-    <div class="torn-edge"></div>
+  <!-- VILLAIN -->
+  <div class="sh"><span class="sh-en">THE ANTAGONIST</span><span class="sh-jp">敵対者</span><span class="sh-line"></span></div>
+  <div class="spotlight villain">
+    <div class="spotlight-watermark">絶</div>
+    <div class="spotlight-eyebrow">Former Squadmate · No Transformation</div>
+    <span class="spotlight-jp">高橋 七海</span>
+    <span class="spotlight-en">Nanami Takahashi</span>
+    <p class="spotlight-intro">Once one of them. Trained at SPD alongside Takeomi and Yami, she fought beside the squad through their mercenary days — until an injury on a job left her changed, and she began drifting from the others without ever fully explaining why. No one pushed. By the time anyone realized how far she'd gone, she was already gone for good.</p>
+    <div class="spotlight-cols">
+      <div>
+        <span class="spotlight-block-lbl">Power Source</span>
+        <span class="spotlight-block-title">An Independent Dark Power</span>
+        <p class="spotlight-block-body">She holds no Sentai Core and undergoes no transformation — just an elite swordsman's skill, sharpened by something she found entirely on her own. Background note: she carries Zangyack heritage, though it plays no active role in the plot.</p>
+      </div>
+      <div>
+        <span class="spotlight-block-lbl">True Goal</span>
+        <span class="spotlight-block-title">Yami's Sentai Core Collection</span>
+        <p class="spotlight-block-body">Every team she's turned against the Gekkoujer, every quiet manipulation — all of it in service of one target: taking the full collection of Sentai Cores for herself.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="paper-base paper-protest">
-    <div class="pin pin-red" style="top:-6px; left:40%;"></div>
-    <div class="stain" style="width:40px;height:28px;bottom:30px;right:8px;transform:rotate(-10deg);"></div>
-    <div class="urgent-bar">&#9632; &nbsp; Late Edition &nbsp; &#9632;</div>
-    <div class="filler-masthead" style="font-size:12px;">West City Courier</div>
-    <div class="filler-sub">City & Regional Affairs &nbsp;|&nbsp; Vol. 29, No. 301</div>
-    <div class="filler-hed" style="font-size:12px; line-height:1.2;">Hundreds march on Governor's Office as anti-Ishvalan tensions mount in West City</div>
-    <div class="filler-deck" style="font-size:8px;">"Send them back" — demonstrators demand expulsion of Ishvalan residents from western districts</div>
-    <div class="filler-body">An estimated four hundred demonstrators gathered outside the West City Governor's Office on the morning of the 12th, demanding what organisers called "the removal of Ishvalan squatters from Amestrian soil." The march, which began at Kandor Square and proceeded along the central boulevard, was organised by a coalition of groups that have grown in visibility since the close of the Ishval conflict three years ago.</div>
-    <div class="filler-body">Governor's staff confirmed that the building was placed under restricted access during the demonstration. No statement was issued. City constables maintained a perimeter but made no arrests. The march dispersed by midday.</div>
-    <div class="filler-body">Ishvalan community representatives declined to comment publicly. A neighbourhood liaison, speaking on condition of anonymity, said residents of the western district had "been expecting something like this for some time."</div>
-    <div class="filler-body">This is the third demonstration of this kind in West City in as many months. Previous gatherings drew smaller crowds. Organisers indicated a larger action is being planned.</div>
-    <div class="filler-body" style="font-size:7.5px; font-style:italic; color:#6a6050; border-top: 0.5px solid #b0a888; padding-top: 4px; margin-top:4px;">Related: Ishvalan resettlement disputes continue across three districts — p.3 &nbsp;|&nbsp; Governor silent on relocation policy — p.4</div>
-    <div class="torn-left"></div>
-  </div>
+</main>
 
-</div>
+<footer>
+  <span>鏡戦隊ゲッコウジャー</span> · KAGAMI SENTAI GEKKOUJER · 完全解説 COMPLETE REFERENCE
+</footer>
+
+</body>
+</html>
