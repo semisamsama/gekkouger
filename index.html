@@ -27,19 +27,11 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 500;
-  }
+  body { background: var(--paper); color: var(--ink); font-family: 'Rajdhani', sans-serif; font-weight: 500; }
   body::before {
-    content: '';
-    position: fixed; inset: 0;
+    content: ''; position: fixed; inset: 0;
     background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
-    background-size: 5px 5px;
-    pointer-events: none;
-    z-index: 0;
+    background-size: 5px 5px; pointer-events: none; z-index: 0;
   }
 
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
@@ -47,11 +39,7 @@
   /* ═══ MASTHEAD ═══ */
   .masthead { background: var(--ink); border-bottom: 5px solid var(--gold); position: relative; z-index: 1; }
   .masthead-grid { display: grid; grid-template-columns: 64px 1fr 120px; max-width: 1180px; margin: 0 auto; }
-  .masthead-vert {
-    writing-mode: vertical-rl; font-family: 'Noto Serif JP', serif; font-weight: 900;
-    font-size: 1.9rem; color: var(--gold); padding: 18px 12px;
-    border-right: 3px solid rgba(201,168,76,0.3); letter-spacing: 0.1em; line-height: 1;
-  }
+  .masthead-vert { writing-mode: vertical-rl; font-family: 'Noto Serif JP', serif; font-weight: 900; font-size: 1.9rem; color: var(--gold); padding: 18px 12px; border-right: 3px solid rgba(201,168,76,0.3); letter-spacing: 0.1em; line-height: 1; }
   .masthead-body { padding: 22px 28px 20px; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
   .masthead-eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.38em; color: var(--silver); text-transform: uppercase; }
   .masthead-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem,4.2vw,3.6rem); line-height: 0.88; color: #fff; letter-spacing: 0.04em; }
@@ -67,77 +55,62 @@
   .sh-line { flex: 1; height: 1px; background: rgba(0,0,0,0.12); }
   .sh-note { font-size: 0.68rem; color: #999; font-style: italic; white-space: nowrap; }
 
-  /* ═══ EQUAL GRID SYSTEM — the backbone of the whole page ═══ */
+  /* ═══ GRID SYSTEM ═══ */
   .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 3px; }
   .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
   .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
   .mb { margin-bottom: 32px; }
 
-  /* generic equal card */
-  .card {
-    background: #fff; border: 3px solid var(--ink);
-    padding: 18px 20px; display: flex; flex-direction: column;
-  }
+  /* ═══ NARRATIVE / LEDE TEXT ═══ */
+  .lede { border: 3px solid var(--ink); background: #fff; margin-bottom: 32px; padding: 26px 30px; }
+  .lede p { font-size: 0.98rem; line-height: 1.85; color: #222; }
+  .lede p + p { margin-top: 14px; }
+  .lede .stamp { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; padding: 2px 9px; background: var(--ink); color: var(--gold); margin-bottom: 12px; }
 
-  /* ═══ INTRO / CONCEPT ═══ */
-  .lede {
-    border: 3px solid var(--ink); background: #fff; margin-bottom: 32px;
-    padding: 26px 30px;
-  }
-  .lede p { font-size: 0.98rem; line-height: 1.8; color: #222; }
-  .lede p + p { margin-top: 12px; }
-  .lede .stamp {
-    display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em;
-    text-transform: uppercase; padding: 2px 9px; background: var(--ink); color: var(--gold); margin-bottom: 12px;
-  }
-
-  /* ═══ TIMELINE (origin story) — 4 equal steps ═══ */
-  .timeline-step {
-    background: #fff; border: 3px solid var(--ink); padding: 16px 18px;
-    display: flex; flex-direction: column; border-top: 5px solid var(--gold);
-  }
+  /* ═══ TIMELINE — 4 equal narrative steps ═══ */
+  .timeline-step { background: #fff; border: 3px solid var(--ink); padding: 18px 19px; display: flex; flex-direction: column; border-top: 5px solid var(--gold); }
   .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 6px; font-weight: 700; }
-  .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; line-height: 1.05; margin-bottom: 8px; }
-  .step-jp { font-family: 'Noto Serif JP', serif; font-size: 0.68rem; color: #888; display:block; margin-bottom: 8px; }
-  .step-body { font-size: 0.76rem; line-height: 1.62; color: #333; }
+  .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; line-height: 1.05; margin-bottom: 4px; }
+  .step-jp { font-family: 'Noto Serif JP', serif; font-size: 0.66rem; color: #888; display:block; margin-bottom: 10px; }
+  .step-body { font-size: 0.78rem; line-height: 1.68; color: #333; }
 
-  /* ═══ ORG CARDS (Sun Church / Benefactor) ═══ */
+  /* ═══ ORG CARDS ═══ */
   .org-card { background: #fff; border: 3px solid var(--ink); padding: 20px 22px; border-top: 5px solid var(--ash); }
   .org-tag { display: inline-block; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; padding: 2px 8px; background: var(--ash); color: #fff; margin-bottom: 10px; }
   .org-jp { font-family: 'Noto Serif JP', serif; font-size: 0.95rem; font-weight: 900; display: block; color: #777; }
   .org-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; letter-spacing: 0.06em; display: block; margin-bottom: 10px; }
-  .org-body { font-size: 0.8rem; line-height: 1.68; color: #333; }
+  .org-body { font-size: 0.82rem; line-height: 1.7; color: #333; }
 
-  /* ═══ RANGER CARDS — uniform 4×2, identical template ═══ */
-  .ranger-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; margin-bottom: 32px; }
+  /* ═══ RANGER CARDS — identical template, reused at any grid size ═══ */
+  .ranger-grid-6 { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; margin-bottom: 32px; }
+  .ranger-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 3px; margin-bottom: 32px; }
   .rc { background: #fff; border: 3px solid var(--ink); display: flex; flex-direction: column; transition: transform .12s; }
   .rc:hover { transform: translateY(-2px); z-index: 2; }
   .rc-bar { height: 5px; width: 100%; }
-  .rc-body { padding: 14px 15px 16px; flex: 1; display: flex; flex-direction: column; }
-  .rc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-  .rc-badge { font-size: 0.54rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 2px 7px; color: #fff; }
-  .rc-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; line-height: 1; opacity: 0.09; }
-  .rc-jp { font-family: 'Noto Serif JP', serif; font-size: 0.82rem; font-weight: 900; display: block; }
-  .rc-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.28rem; letter-spacing: 0.04em; line-height: 1.05; display: block; }
-  .rc-actor { font-size: 0.62rem; font-weight: 700; color: #777; letter-spacing: 0.04em; margin-top: 1px; }
-  .rc-meaning { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #999; margin: 3px 0 8px; }
-  .rc-trait { font-size: 0.68rem; line-height: 1.55; color: #444; margin-bottom: 10px; min-height: 48px; }
-  .rc-divider { height: 1px; background: rgba(0,0,0,0.09); margin: 8px 0; }
+  .rc-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+  .rc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .rc-badge { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 2px 8px; color: #fff; }
+  .rc-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; line-height: 1; opacity: 0.09; }
+  .rc-jp { font-family: 'Noto Serif JP', serif; font-size: 0.88rem; font-weight: 900; display: block; }
+  .rc-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; line-height: 1.05; display: block; }
+  .rc-actor { font-size: 0.65rem; font-weight: 700; color: #777; letter-spacing: 0.04em; margin-top: 1px; }
+  .rc-meaning { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #999; margin: 4px 0 9px; }
+  .rc-trait { font-size: 0.72rem; line-height: 1.58; color: #444; margin-bottom: 11px; }
+  .rc-divider { height: 1px; background: rgba(0,0,0,0.09); margin: 9px 0; }
   .rc-stat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
-  .rc-stat-lbl { font-size: 0.54rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #aaa; }
-  .rc-stat-val { font-size: 0.72rem; font-weight: 600; text-align: right; max-width: 60%; }
-  .rc-atk { margin-top: 8px; padding: 7px 9px; background: var(--paper2); border-left: 3px solid; }
-  .rc-atk-lbl { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #999; display: block; }
-  .rc-atk-en { font-family: 'Bebas Neue', sans-serif; font-size: 0.92rem; letter-spacing: 0.05em; display: block; line-height: 1.1; }
-  .rc-atk-jp { font-family: 'Sawarabi Mincho', serif; font-size: 0.6rem; color: #888; display: block; margin-bottom: 3px; }
-  .rc-atk-desc { font-size: 0.66rem; line-height: 1.5; color: #444; }
-  .rc-upgrade { margin-top: 8px; padding: 7px 9px; background: var(--ink); color: var(--paper); }
-  .rc-upgrade-lbl { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
-  .rc-upgrade-name { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.06em; color: #fff; display: block; margin-bottom: 2px; }
-  .rc-upgrade-desc { font-size: 0.63rem; line-height: 1.5; color: rgba(244,239,230,0.72); }
-  .rc-solar-tag { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: var(--gold-c); padding: 1px 6px; margin-left: 6px; }
+  .rc-stat-lbl { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #aaa; }
+  .rc-stat-val { font-size: 0.76rem; font-weight: 600; text-align: right; max-width: 60%; }
+  .rc-atk { margin-top: 9px; padding: 8px 10px; background: var(--paper2); border-left: 3px solid; }
+  .rc-atk-lbl { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #999; display: block; }
+  .rc-atk-en { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.05em; display: block; line-height: 1.1; }
+  .rc-atk-jp { font-family: 'Sawarabi Mincho', serif; font-size: 0.64rem; color: #888; display: block; margin-bottom: 3px; }
+  .rc-atk-desc { font-size: 0.7rem; line-height: 1.52; color: #444; }
+  .rc-upgrade { margin-top: 9px; padding: 8px 10px; background: var(--ink); color: var(--paper); }
+  .rc-upgrade-lbl { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
+  .rc-upgrade-name { font-family: 'Bebas Neue', sans-serif; font-size: 0.88rem; letter-spacing: 0.06em; color: #fff; display: block; margin-bottom: 2px; }
+  .rc-upgrade-desc { font-size: 0.66rem; line-height: 1.5; color: rgba(244,239,230,0.72); }
+  .rc-solar-tag { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: var(--gold-c); padding: 1px 6px; margin-left: 6px; }
 
-  /* color helpers */
   .bg-red{background:var(--red)} .bg-blue{background:var(--blue)} .bg-orange{background:var(--orange)}
   .bg-green{background:var(--green)} .bg-purple{background:var(--purple)} .bg-pink{background:var(--pink)}
   .bg-gold{background:var(--gold-c)} .bg-steel{background:var(--steel)}
@@ -148,14 +121,14 @@
   .bl-green{border-left-color:var(--green)} .bl-purple{border-left-color:var(--purple)} .bl-pink{border-left-color:var(--pink)}
   .bl-gold{border-left-color:var(--gold-c)} .bl-steel{border-left-color:var(--steel)}
 
-  /* ═══ ABILITIES — 3 equal ═══ */
+  /* ═══ ABILITIES ═══ */
   .ability-card { background: #fff; border: 3px solid var(--ink); padding: 18px 20px; border-top: 5px solid var(--gold); }
   .ability-jp { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 900; display: block; margin-bottom: 2px; }
   .ability-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; display: block; margin-bottom: 4px; }
   .ability-sub { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa; margin-bottom: 9px; display: block; }
   .ability-desc { font-size: 0.76rem; line-height: 1.62; color: #444; }
 
-  /* ═══ MECHA — tiered but internally equal ═══ */
+  /* ═══ MECHA ═══ */
   .mc { background: #fff; border: 3px solid var(--ink); padding: 18px 20px; }
   .mc.primary { background: var(--ink); color: var(--paper); border-color: var(--gold); border-width: 3px; }
   .mc.combined { background: var(--paper3); border-color: var(--gold); }
@@ -163,58 +136,50 @@
   .mc-jp { font-family: 'Noto Serif JP', serif; font-size: 0.88rem; font-weight: 900; display: block; opacity: 0.55; }
   .mc-en { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; letter-spacing: 0.05em; line-height: 1; display: block; margin-bottom: 8px; }
   .mc.primary .mc-en { color: var(--gold); }
-  .mc-desc { font-size: 0.76rem; line-height: 1.62; opacity: 0.85; margin-bottom: 10px; }
+  .mc-desc { font-size: 0.76rem; line-height: 1.65; opacity: 0.85; margin-bottom: 10px; }
   .mc-ability-lbl { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 4px; }
   .mc-ability-body { font-size: 0.72rem; line-height: 1.55; border-left: 2px solid var(--gold); padding-left: 9px; opacity: 0.85; }
 
-  /* ═══ SPOTLIGHT PANEL — used for Ultimate Form, Cathedral, Nanami ═══ */
-  .spotlight {
-    border: 4px solid var(--gold); padding: 30px 34px; margin-bottom: 32px;
-    position: relative; overflow: hidden;
-  }
+  /* ═══ SPOTLIGHT PANEL ═══ */
+  .spotlight { border: 4px solid var(--gold); padding: 30px 34px; margin-bottom: 32px; position: relative; overflow: hidden; }
   .spotlight.dark { background: var(--ink); color: var(--paper); }
   .spotlight.villain { background: #16100c; color: #ece2d4; border-color: var(--ash); }
-  .spotlight-watermark {
-    position: absolute; right: -10px; top: -10px; font-family: 'Noto Serif JP', serif;
-    font-size: 8.5rem; font-weight: 900; line-height: 1; pointer-events: none;
-  }
+  .spotlight-watermark { position: absolute; right: -10px; top: -10px; font-family: 'Noto Serif JP', serif; font-size: 8.5rem; font-weight: 900; line-height: 1; pointer-events: none; }
   .spotlight.dark .spotlight-watermark { color: rgba(201,168,76,0.05); }
   .spotlight.villain .spotlight-watermark { color: rgba(107,93,69,0.12); }
-  .spotlight-eyebrow { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
-  .spotlight.dark .spotlight-eyebrow, .spotlight.villain .spotlight-eyebrow { color: var(--gold); }
+  .spotlight-eyebrow { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; color: var(--gold); }
   .spotlight-jp { font-family: 'Noto Serif JP', serif; font-size: 1.05rem; font-weight: 900; display: block; margin-bottom: 4px; opacity: 0.6; }
-  .spotlight-en { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem,3.4vw,2.7rem); letter-spacing: 0.05em; line-height: 0.96; display: block; margin-bottom: 14px; color: var(--gold); }
-  .spotlight-intro { font-size: 0.82rem; line-height: 1.75; max-width: 680px; margin-bottom: 18px; opacity: 0.82; }
+  .spotlight-en { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem,3.4vw,2.7rem); letter-spacing: 0.05em; line-height: 0.96; display: block; margin-bottom: 16px; color: var(--gold); }
+  .spotlight-intro { font-size: 0.85rem; line-height: 1.8; max-width: 700px; margin-bottom: 18px; opacity: 0.85; }
+  .spotlight-intro + .spotlight-intro { margin-top: -6px; }
   .spotlight-cols { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
   .spotlight-block-lbl { font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; color: var(--gold); display: block; margin-bottom: 5px; }
   .spotlight-block-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-  .spotlight-block-body { font-size: 0.74rem; line-height: 1.65; opacity: 0.78; }
+  .spotlight-block-body { font-size: 0.76rem; line-height: 1.68; opacity: 0.78; }
 
-  /* ═══ REFLECTION WAR matchup cards — 4 equal ═══ */
+  /* ═══ REFLECTION WAR ═══ */
   .war-card { background: #fff; border: 3px solid var(--ink); padding: 16px 18px; border-top: 5px solid var(--red); }
   .war-vs { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
   .war-matchup { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.04em; line-height: 1.15; margin-bottom: 8px; }
-  .war-desc { font-size: 0.72rem; line-height: 1.55; color: #444; }
+  .war-desc { font-size: 0.75rem; line-height: 1.58; color: #444; }
 
-  .callout {
-    background: var(--paper2); border: 3px solid var(--ink); border-left: 6px solid var(--gold);
-    padding: 16px 20px; margin-bottom: 32px; font-size: 0.8rem; line-height: 1.7; color: #222;
-  }
+  .callout { background: var(--paper2); border: 3px solid var(--ink); border-left: 6px solid var(--gold); padding: 18px 22px; margin-bottom: 32px; font-size: 0.85rem; line-height: 1.78; color: #222; }
   .callout strong { color: var(--ink); }
 
-  /* ═══ FOOTER ═══ */
+  .bridge-text { font-size: 0.95rem; line-height: 1.85; color: #222; margin-bottom: 18px; }
+
   footer { background: var(--ink); color: rgba(244,239,230,0.4); text-align: center; padding: 22px; font-size: 0.64rem; letter-spacing: 0.18em; border-top: 3px solid var(--gold); margin-top: 24px; }
   footer span { color: var(--gold); }
 
   @media (max-width: 980px) {
-    .ranger-grid { grid-template-columns: repeat(2,1fr); }
+    .ranger-grid-6 { grid-template-columns: repeat(2,1fr); }
     .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
     .masthead-grid { grid-template-columns: 1fr; }
     .masthead-vert { writing-mode: horizontal-tb; border-right: none; border-bottom: 3px solid var(--gold); font-size: 1.4rem; padding: 10px 18px; }
     .masthead-moon { display: none; }
-    .ranger-grid { grid-template-columns: 1fr; }
+    .ranger-grid-6, .ranger-grid-2 { grid-template-columns: 1fr; }
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .spotlight-cols { grid-template-columns: 1fr; }
   }
@@ -241,59 +206,59 @@
   <div class="lede">
     <span class="stamp">Premise</span>
     <p>Before they were a Sentai team, the Gekkoujer were a mercenary squad — six fighters taking contracts where they could find them. They commissioned a freelance weaponsmith named <strong>Yami</strong> to build their gear: a set of daggers called the Gekkou Burēdo, each capable of taking a <strong>Sentai Core</strong> — fragments of power Yami had spent years collecting and reconstructing from the legacies of past Sentai teams.</p>
-    <p>A frame-up changed everything. Hunted by three separate agencies for crimes they didn't fully commit, the squad fled Earth and settled in secret on the Moon. There, with nowhere left to run, they were declared something stranger than mercenaries: <strong>the Sentai team to end all Sentai teams.</strong> Their jobs didn't stop — they just got bigger, stranger, and increasingly directed by forces neither they nor Yami fully understand.</p>
+    <p>A frame-up changed everything. Hunted by three separate agencies for crimes they didn't fully commit, the six fled Earth and settled in secret on the Moon. There, with nowhere left to run, they were declared something stranger than mercenaries: <strong>the Sentai team to end all Sentai teams.</strong> Two more would eventually stand beside them — but that's a story that hadn't happened yet.</p>
   </div>
 
-  <!-- ORIGIN TIMELINE -->
+  <!-- FORMATION -->
   <div class="sh"><span class="sh-en">FORMATION</span><span class="sh-jp">結成までの軌跡</span><span class="sh-line"></span><span class="sh-note">chronological</span></div>
   <div class="grid-4 mb">
     <div class="timeline-step">
       <span class="step-num">STEP 01</span>
       <span class="step-title">The Squad</span>
       <span class="step-jp">傭兵時代</span>
-      <p class="step-body">Six mercenaries take contracts across the underworld. Among the trainees who once passed through SPD together are <strong>Hayashi Takeomi</strong>, <strong>Yami</strong>, and <strong>Nanami Takahashi</strong> — three names that will matter far more later.</p>
+      <p class="step-body">Long before the Moon, there was just the work. Six mercenaries, no banner worth remembering, taking contracts wherever the pay was good and the questions were few. Three of them go back further than that — <strong>Hayashi Takeomi</strong>, <strong>Yami</strong>, and a trainee named <strong>Nanami Takahashi</strong> came up together through SPD, before any of them walked away from what they were supposed to become. None of them talk about it much.</p>
     </div>
     <div class="timeline-step">
       <span class="step-num">STEP 02</span>
       <span class="step-title">The Weaponsmith</span>
       <span class="step-jp">武器商人ヤミ</span>
-      <p class="step-body">The squad commissions Yami, an outside contractor, to build their gear. He saves their lives more than once before formally joining their ranks as their swordsman.</p>
+      <p class="step-body">When the squad needed real weapons, they called in a name whispered in certain circles: Yami, a freelance smith with an unnerving habit of recovering "lost" Sentai relics and quietly rebuilding them into something new. More than once, when a contract went bad, it was Yami who showed up swinging a blade he had no obligation to swing. Eventually nobody questioned why he was still around. He just was.</p>
     </div>
     <div class="timeline-step">
       <span class="step-num">STEP 03</span>
       <span class="step-title">The Frame-Up</span>
       <span class="step-jp">濡れ衣</span>
-      <p class="step-body">Nanami vanishes. Around the same time, Gokaiger's ranger keys go missing, an SPD prisoner escapes, and Patranger ties the squad to a botched museum heist where a ring resembling AkaRed disappeared. Hunted on three fronts, they run.</p>
+      <p class="step-body">Then, in the span of weeks, it all came apart. Nanami stopped answering — then stopped existing anywhere they could find her. Gokaiger's Ranger Keys vanished from a secure vault. An SPD prisoner broke containment under circumstances that pointed conveniently at people the agency already had a file on. A botched museum job left behind one missing object: a ring identical, by every account, to the one carried by AkaRed. Three investigations. One shrinking list of suspects.</p>
     </div>
     <div class="timeline-step">
       <span class="step-num">STEP 04</span>
       <span class="step-title">Exile</span>
       <span class="step-jp">月への逃亡</span>
-      <p class="step-body">They settle in secret on the Moon. With no way back and no one left to answer to, they're pronounced a Sentai team — not chosen by destiny, but by elimination of every other option.</p>
+      <p class="step-body">They ran further than anyone expected — off the list of places Gokaiger, Dekaranger, and Patranger knew to look. The Moon was supposed to be temporary. It became permanent the moment someone decided to make it official: these five fugitives and the smith who'd thrown in with them weren't mercenaries hiding from the law anymore. They were a Sentai team. Nobody asked if they wanted the title.</p>
     </div>
   </div>
 
-  <!-- SUN CHURCH / BENEFACTOR -->
+  <!-- UNKNOWN FORCES -->
   <div class="sh"><span class="sh-en">UNKNOWN FORCES</span><span class="sh-jp">不明の組織</span><span class="sh-line"></span></div>
   <div class="grid-2 mb">
     <div class="org-card">
       <span class="org-tag">Religious Order</span>
       <span class="org-jp">太陽教会</span>
       <span class="org-en">The Sun Church</span>
-      <p class="org-body">A mysterious order whose full doctrine and goals remain unclear. They maintain a cathedral that surfaces repeatedly in the Gekkoujer's path — including, eventually, as the site of a confrontation no one saw coming. Whether they have any real connection to the Solar Rangers' power is, as of yet, unconfirmed.</p>
+      <p class="org-body">Every few jobs, the trail leads back to the same place: a cathedral that shouldn't be as easy to find as it is, kept by an order calling itself the Sun Church. Nobody on the squad has worked out what they actually believe in. What's certain is that the Church keeps reappearing — in places, in names, and eventually, in a confrontation nobody saw coming.</p>
     </div>
     <div class="org-card">
       <span class="org-tag">Anonymous</span>
       <span class="org-jp">依頼主</span>
       <span class="org-en">The Benefactor</span>
-      <p class="org-body">There is no monster-of-the-week here — there's a mysterious third party who keeps handing the squad jobs. Each mission pits the Gekkoujer against a past Sentai team or a past Sentai villain, and it's through these clashes — not divine selection — that each Ranger comes to wield the power of a Sentai Core.</p>
+      <p class="org-body">The jobs don't stop just because they're a Sentai team now — if anything, they get bigger, handed down by someone who never shows their face and never asks for anything but results. Every contract sends them up against a team or a villain out of Sentai history. And every time they survive one, something changes: a weapon answers differently, a Core wakes up that wasn't active before.</p>
     </div>
   </div>
 
-  <!-- RANGER ROSTER -->
-  <div class="sh"><span class="sh-en">THE ROSTER</span><span class="sh-jp">隊員一覧</span><span class="sh-line"></span><span class="sh-note">8 members</span></div>
+  <!-- THE ORIGINAL SIX -->
+  <div class="sh"><span class="sh-en">THE ORIGINAL SIX</span><span class="sh-jp">創設メンバー</span><span class="sh-line"></span><span class="sh-note">founding roster</span></div>
 
-  <div class="ranger-grid">
+  <div class="ranger-grid-6">
 
     <!-- SHOKU -->
     <div class="rc">
@@ -445,6 +410,78 @@
       </div>
     </div>
 
+  </div><!-- /ranger-grid-6 -->
+
+  <!-- UTILITY ABILITIES -->
+  <div class="sh"><span class="sh-en">UTILITY ABILITIES</span><span class="sh-jp">共通能力</span><span class="sh-line"></span><span class="sh-note">shared by all Gekkoujer</span></div>
+  <div class="grid-3 mb">
+    <div class="ability-card">
+      <span class="ability-jp">月光瞬歩</span>
+      <span class="ability-en">Gekkou Shunpo</span>
+      <span class="ability-sub">Moonlight Instant Step</span>
+      <p class="ability-desc">A short-range teleport or burst of super-speed, letting any Gekkoujer reposition instantly mid-fight.</p>
+    </div>
+    <div class="ability-card">
+      <span class="ability-jp">月光共鳴</span>
+      <span class="ability-en">Gekkou Kyomei</span>
+      <span class="ability-sub">Moonlight Resonance</span>
+      <p class="ability-desc">A heightened sense that picks up hidden enemies, residual power signatures, or an ambush before it lands.</p>
+    </div>
+    <div class="ability-card">
+      <span class="ability-jp">月光反射</span>
+      <span class="ability-en">Gekkou Hansha</span>
+      <span class="ability-sub">Moonlight Reflection</span>
+      <p class="ability-desc">A defensive barrier of reflected moonlight — energy attacks that strike it are sent straight back at the attacker.</p>
+    </div>
+  </div>
+
+  <!-- MECHA (primary only, at this point in the story) -->
+  <div class="sh"><span class="sh-en">MECHA</span><span class="sh-jp">メカ</span><span class="sh-line"></span></div>
+  <div class="callout"><strong>Note:</strong> every Sentai Core carries mecha-tier power on its own. This is why a single Ranger — Seiran or Shoku, most notably — can hold a line against an entire rival team without a giant robot involved at all.</div>
+  <div class="mc primary mb">
+    <span class="mc-tag">Primary · Core Six</span>
+    <span class="mc-jp">カガミオー</span>
+    <span class="mc-en">Kagami-Ō — "Mirror King"</span>
+    <p class="mc-desc">The six Rangers pilot the Gekkou Sentai Spaceship for travel and battle. In stable orbit it becomes the <strong>Gekkou Fortress</strong>, their home base on the Moon. In combat, it becomes the giant robot Kagami-Ō.</p>
+    <span class="mc-ability-lbl">Special Abilities</span>
+    <p class="mc-ability-body">Mirrored chest plates absorb incoming fire and return it as the <strong>Moonlight Ray</strong>. Finisher: <strong>Kagami-Ō Gekkou Slash.</strong></p>
+  </div>
+
+  <!-- REFLECTION WAR -->
+  <div class="sh"><span class="sh-en">THE REFLECTION WAR</span><span class="sh-jp">鏡の戦争</span><span class="sh-line"></span><span class="sh-note">mid-season arc</span></div>
+  <p class="bridge-text">It takes months before Nanami resurfaces — and when she does, she doesn't come alone. Somehow, impossibly, she's turned four entire Sentai teams against the people she used to fight beside. Whatever case she made to Gokaiger, Dekaranger, Timeranger, and Gozyuger, it's been convincing enough to put all four in the same place at the same time, weapons drawn. The real target isn't even the Gekkoujer. It's Yami — and everything he's spent years collecting.</p>
+
+  <div class="grid-4" style="margin-bottom: 16px;">
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Gokaiger</div>
+      <p class="war-desc">Two Gekkoujer dig in against the pirates — mercenary discipline against scavenger instinct, neither side blinking first.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Dekaranger</div>
+      <p class="war-desc">A second pair holds against Dekaranger, and for a moment it almost looks like a reunion instead of a battle. It isn't.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Timeranger</div>
+      <p class="war-desc">A third pair is caught in a fight they never asked for, against a team that seems just as unsure why they're here.</p>
+    </div>
+    <div class="war-card">
+      <div class="war-vs">Matchup</div>
+      <div class="war-matchup">vs. Gozyuger</div>
+      <p class="war-desc">The fourth pair holds the line — while Seiran and Shoku peel off entirely, each taking an entire rival team alone.</p>
+    </div>
+  </div>
+
+  <div class="callout">Somewhere in the middle of it, a mecha the size of a building rises out of nothing — Nanami's, built from something none of them recognize. It nearly ends the fight outright, until something else arrives to stop it: the <strong>Kamakiri Mecha</strong>, gone since the day it vanished with a stranger in tow, slams back into the battle to hold the line. That's how the squad finally meets <strong>Himeno Ran</strong> — not through introductions, but through a giant mantis-shaped machine putting itself between her and disaster. While the field burns, <strong>Yami finds Nanami</strong> in the middle of it, and for the first time since she vanished, they fight each other directly. Neither wins. When the dust settles, nothing is resolved — not the battle, not whatever this is between them, and certainly not what she actually came for.</div>
+
+  <!-- THE SOLAR RANGERS -->
+  <div class="sh"><span class="sh-en">THE SOLAR RANGERS</span><span class="sh-jp">輝きレンジャー</span><span class="sh-line"></span><span class="sh-note">join after the Reflection War</span></div>
+  <p class="bridge-text">Ran doesn't leave after the battle. There's nowhere left for her to go — her world is gone, and the mecha that carried her here vanishes again the moment the fighting stops. Nobody really discusses it; she just doesn't get left behind. <strong>Kobo</strong>, who's spent years supplying Yami's workshop from the sidelines, steps fully into the field for the first time alongside her. Whatever the war woke up in both of them, it answers to the Sun instead of the Moon. The Gekkoujer come out of the Reflection War with two new names — drawing power not through the Moon's reflection, but from a direct reflection of the Sun's own.</p>
+
+  <div class="ranger-grid-2">
+
     <!-- HINODE -->
     <div class="rc">
       <div class="rc-bar bg-gold"></div>
@@ -454,7 +491,7 @@
         <span class="rc-en t-gold">Kagayaki Hinode</span>
         <span class="rc-actor">Himeno Ran</span>
         <div class="rc-meaning">Sunrise</div>
-        <p class="rc-trait">Sole survivor of a homeworld that no longer exists. Carried to Earth aboard the Kamakiri mecha, which vanished from sight the moment she arrived safely.</p>
+        <p class="rc-trait">Sole survivor of a homeworld that no longer exists. Carried to Earth aboard the Kamakiri mecha, then thrust into the open the moment it resurfaced to hold the line during the Reflection War.</p>
         <div class="rc-divider"></div>
         <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Rapier</span></div>
         <div class="rc-atk bl-gold">
@@ -479,7 +516,7 @@
         <span class="rc-en t-steel">Kagayaki Zankou</span>
         <span class="rc-actor">Yasue Kobo</span>
         <div class="rc-meaning">Afterglow</div>
-        <p class="rc-trait">Yami's old supplier of parts and scrap, long before any of this had a name. Knows where every Sentai Core fragment came from — because he sold most of them to Yami himself.</p>
+        <p class="rc-trait">Yami's old supplier of parts and scrap, long before any of this had a name. Stepped onto the battlefield for the first time during the Reflection War — and never quite stepped back off it.</p>
         <div class="rc-divider"></div>
         <div class="rc-stat"><span class="rc-stat-lbl">Weapon</span><span class="rc-stat-val">Gun</span></div>
         <div class="rc-atk bl-steel">
@@ -495,39 +532,64 @@
       </div>
     </div>
 
-  </div><!-- /ranger-grid -->
+  </div><!-- /ranger-grid-2 -->
 
-  <!-- UTILITY ABILITIES -->
-  <div class="sh"><span class="sh-en">UTILITY ABILITIES</span><span class="sh-jp">共通能力</span><span class="sh-line"></span><span class="sh-note">shared by all 8</span></div>
-  <div class="grid-3 mb">
-    <div class="ability-card">
-      <span class="ability-jp">月光瞬歩</span>
-      <span class="ability-en">Gekkou Shunpo</span>
-      <span class="ability-sub">Moonlight Instant Step</span>
-      <p class="ability-desc">A short-range teleport or burst of super-speed, letting any Gekkoujer reposition instantly mid-fight.</p>
+  <div class="grid-2 mb">
+    <div class="mc">
+      <span class="mc-tag">Solar · Hinode</span>
+      <span class="mc-jp">輝き閃光</span>
+      <span class="mc-en">Kagayaki-Senkou</span>
+      <p class="mc-desc">A sleek gold fighter jet, built in part from salvage off the original Kamakiri mecha — the same vessel that carried Ran to Earth. Its two-part body and blade-like wings echo that origin.</p>
+      <span class="mc-ability-lbl">Role</span>
+      <p class="mc-ability-body">High-speed aerial support. Combines with Kagayaki-Aka.</p>
     </div>
-    <div class="ability-card">
-      <span class="ability-jp">月光共鳴</span>
-      <span class="ability-en">Gekkou Kyomei</span>
-      <span class="ability-sub">Moonlight Resonance</span>
-      <p class="ability-desc">A heightened sense that picks up hidden enemies, residual power signatures, or an ambush before it lands.</p>
+    <div class="mc">
+      <span class="mc-tag">Solar · Zankou</span>
+      <span class="mc-jp">輝き痕</span>
+      <span class="mc-en">Kagayaki-Aka</span>
+      <p class="mc-desc">A silver artillery vehicle built around a long-range cannon — practical, heavy, and exactly what you'd expect from Kobo's old scrapyard instincts.</p>
+      <span class="mc-ability-lbl">Role</span>
+      <p class="mc-ability-body">Heavy ranged support. Combines with Kagayaki-Senkou.</p>
     </div>
-    <div class="ability-card">
-      <span class="ability-jp">月光反射</span>
-      <span class="ability-en">Gekkou Hansha</span>
-      <span class="ability-sub">Moonlight Reflection</span>
-      <p class="ability-desc">A defensive barrier of reflected moonlight — energy attacks that strike it are sent straight back at the attacker.</p>
+  </div>
+  <div class="mc combined mb">
+    <span class="mc-tag">Combined Form</span>
+    <span class="mc-jp" style="opacity:0.5;">輝き人</span>
+    <span class="mc-en" style="color:var(--ink);">Kagayaki-Jin — "Radiant Human"</span>
+    <p class="mc-desc" style="color:#333; opacity:1;">Faster and more agile than Kagami-Ō, formed when the two Solar mecha combine. Acts as a secondary support fighter, striking from angles the Mirror King can't reach.</p>
+  </div>
+
+  <!-- CATHEDRAL CONFRONTATION -->
+  <div class="sh"><span class="sh-en">THE CATHEDRAL CONFRONTATION</span><span class="sh-jp">大聖堂の対峙</span><span class="sh-line"></span></div>
+  <div class="spotlight dark">
+    <div class="spotlight-watermark">対峙</div>
+    <div class="spotlight-eyebrow">Aftermath · Yami vs. Nanami</div>
+    <span class="spotlight-jp">大聖堂</span>
+    <span class="spotlight-en">The Sun Church Cathedral</span>
+    <p class="spotlight-intro">The Reflection War ends without an ending — no surrender, no resolution, just an unspoken pause. Yami doesn't wait for the next move. He goes looking for Nanami himself, and the trail leads, as it always seems to, back to a Sun Church cathedral.</p>
+    <p class="spotlight-intro">What happens inside isn't a battle. It's quieter than that — two blades, two people who used to trust each other, and a conversation that turns into a fight only because neither of them knows how else to have it anymore.</p>
+    <div class="spotlight-cols">
+      <div>
+        <span class="spotlight-block-lbl">Reveal — Nanami</span>
+        <span class="spotlight-block-title">A Fallen Gosei Angel</span>
+        <p class="spotlight-block-body">What's underneath the swordsman the squad trained with isn't human at all — something far older, celestial once, fallen long before any of them ever met her.</p>
+      </div>
+      <div>
+        <span class="spotlight-block-lbl">Reveal — Yami</span>
+        <span class="spotlight-block-title">A Gorma Tribe Descendant</span>
+        <p class="spotlight-block-body">In the same breath, Yami learns the blood in his own veins traces back to the Gorma Tribe — one of the oldest enemies any Sentai team has ever faced.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ULTIMATE FORM -->
-  <div class="sh"><span class="sh-en">ULTIMATE FORM</span><span class="sh-jp">究極形態</span><span class="sh-line"></span></div>
+  <!-- ULTIMATE FORM (now possible — all 8 Cores exist) -->
+  <div class="sh"><span class="sh-en">ULTIMATE FORM</span><span class="sh-jp">究極形態</span><span class="sh-line"></span><span class="sh-note">requires all 8 Sentai Cores</span></div>
   <div class="spotlight dark">
     <div class="spotlight-watermark">王蝕</div>
-    <div class="spotlight-eyebrow">Gekkou Shoku Exclusive · All 8 Sentai Cores</div>
+    <div class="spotlight-eyebrow">Gekkou Shoku Exclusive</div>
     <span class="spotlight-jp">月光王蝕</span>
     <span class="spotlight-en">Gekkou Ōshoku — "Moonlight King Eclipse"</span>
-    <p class="spotlight-intro">Achieved by channeling all eight Sentai Cores at once — fitting, for the one member who started this team as an outsider. The suit turns brilliant silver with crimson trim, pulsing with moon-like radiance. He wields a massive two-handed sword forged from pure reflected light.</p>
+    <p class="spotlight-intro">Only once all eight Cores exist — Moon and Sun alike — can this form be reached at all. Fitting, for the one member who started this team as an outsider. The suit turns brilliant silver with crimson trim, pulsing with moon-like radiance. He wields a massive two-handed sword forged from pure reflected light.</p>
     <div class="spotlight-cols">
       <div>
         <span class="spotlight-block-lbl">Ultimate Ability</span>
@@ -542,114 +604,19 @@
     </div>
   </div>
 
-  <!-- MECHA -->
-  <div class="sh"><span class="sh-en">MECHA</span><span class="sh-jp">メカ</span><span class="sh-line"></span></div>
-
-  <div class="callout"><strong>Note:</strong> every Sentai Core carries mecha-tier power on its own. This is why a single Ranger — Seiran or Shoku, most notably — can hold a line against an entire rival team without a giant robot involved at all. The mecha below are what happens when that power scales up further.</div>
-
-  <div class="grid-1 mb" style="display:flex; flex-direction:column; gap:3px;">
-    <div class="mc primary">
-      <span class="mc-tag">Primary · Core Six</span>
-      <span class="mc-jp">カガミオー</span>
-      <span class="mc-en">Kagami-Ō — "Mirror King"</span>
-      <p class="mc-desc">The six core Rangers pilot the Gekkou Sentai Spaceship for travel and battle. In stable orbit it becomes the <strong>Gekkou Fortress</strong>, their home base on the Moon. In combat, it becomes the giant robot Kagami-Ō.</p>
-      <span class="mc-ability-lbl">Special Abilities</span>
-      <p class="mc-ability-body">Mirrored chest plates absorb incoming fire and return it as the <strong>Moonlight Ray</strong>. Finisher: <strong>Kagami-Ō Gekkou Slash.</strong></p>
-    </div>
-
-    <div class="grid-2">
-      <div class="mc">
-        <span class="mc-tag">Solar · Hinode</span>
-        <span class="mc-jp">輝き閃光</span>
-        <span class="mc-en">Kagayaki-Senkou</span>
-        <p class="mc-desc">A sleek gold fighter jet, built in part from salvage off the original Kamakiri mecha — the same vessel that carried Ran to Earth. Its two-part body and blade-like wings echo that origin.</p>
-        <span class="mc-ability-lbl">Role</span>
-        <p class="mc-ability-body">High-speed aerial support. Combines with Kagayaki-Aka.</p>
-      </div>
-      <div class="mc">
-        <span class="mc-tag">Solar · Zankou</span>
-        <span class="mc-jp">輝き痕</span>
-        <span class="mc-en">Kagayaki-Aka</span>
-        <p class="mc-desc">A silver artillery vehicle built around a long-range cannon — practical, heavy, and exactly what you'd expect from Kobo's old scrapyard instincts.</p>
-        <span class="mc-ability-lbl">Role</span>
-        <p class="mc-ability-body">Heavy ranged support. Combines with Kagayaki-Senkou.</p>
-      </div>
-    </div>
-
-    <div class="mc combined">
-      <span class="mc-tag">Combined Form</span>
-      <span class="mc-jp" style="opacity:0.5;">輝き人</span>
-      <span class="mc-en" style="color:var(--ink);">Kagayaki-Jin — "Radiant Human"</span>
-      <p class="mc-desc" style="color:#333; opacity:1;">Faster and more agile than Kagami-Ō, formed when the two Solar mecha combine. Acts as a secondary support fighter, striking from angles the Mirror King can't reach.</p>
-      <span class="mc-ability-lbl" style="color:var(--ash);">Role</span>
-      <p class="mc-ability-body" style="color:#333; opacity:1; border-left-color: var(--ash);">High-agility hybrid melee/ranged assault.</p>
-    </div>
-  </div>
-
-  <!-- REFLECTION WAR -->
-  <div class="sh"><span class="sh-en">THE REFLECTION WAR</span><span class="sh-jp">鏡の戦争</span><span class="sh-line"></span><span class="sh-note">mid-season arc</span></div>
-  <div class="lede" style="margin-bottom: 3px;">
-    <p>Months into their exile, Nanami resurfaces — not to rejoin them, but to turn four entire Sentai teams against them at once. Her real target was never the Gekkoujer themselves: it's Yami's full Sentai Core collection, and this is how she pries the team apart long enough to take it.</p>
-  </div>
-  <div class="grid-4" style="margin-bottom: 16px;">
-    <div class="war-card">
-      <div class="war-vs">Matchup</div>
-      <div class="war-matchup">vs. Gokaiger</div>
-      <p class="war-desc">Engaged by a paired set of Gekkoujer — pirates against mercenaries, neither side holding back.</p>
-    </div>
-    <div class="war-card">
-      <div class="war-vs">Matchup</div>
-      <div class="war-matchup">vs. Dekaranger</div>
-      <p class="war-desc">A second pair holds the line — old SPD instincts on both sides of the fight.</p>
-    </div>
-    <div class="war-card">
-      <div class="war-vs">Matchup</div>
-      <div class="war-matchup">vs. Timeranger</div>
-      <p class="war-desc">A third pair, caught in a fight neither team fully understands the cause of.</p>
-    </div>
-    <div class="war-card">
-      <div class="war-vs">Matchup</div>
-      <div class="war-matchup">vs. Gozyuger</div>
-      <p class="war-desc">The fourth pair. Meanwhile, Seiran and Shoku each break off to hold an entire rival team alone.</p>
-    </div>
-  </div>
-  <div class="callout">During the chaos, a massive mecha fielded by Nanami nearly overwhelms the field — until the long-vanished <strong>Kamakiri mecha</strong> resurfaces to help hold it back, finally revealing <strong>Himeno Ran</strong> to the rest of the team. While the others fight for ground, <strong>Yami and Nanami clash directly</strong> for the first time since she vanished. The battle ends with no clear victor on either side.</div>
-
-  <!-- CATHEDRAL CONFRONTATION -->
-  <div class="sh"><span class="sh-en">THE CATHEDRAL CONFRONTATION</span><span class="sh-jp">大聖堂の対峙</span><span class="sh-line"></span></div>
-  <div class="spotlight dark">
-    <div class="spotlight-watermark">対峙</div>
-    <div class="spotlight-eyebrow">Aftermath · Yami vs. Nanami</div>
-    <span class="spotlight-jp">大聖堂</span>
-    <span class="spotlight-en">The Sun Church Cathedral</span>
-    <p class="spotlight-intro">After the Reflection War settles with nothing resolved, Yami tracks Nanami to a cathedral kept by the Sun Church. What happens there is a private fight, not a battle — and it ends in two reveals neither of them saw coming.</p>
-    <div class="spotlight-cols">
-      <div>
-        <span class="spotlight-block-lbl">Reveal — Nanami</span>
-        <span class="spotlight-block-title">A Fallen Gosei Angel</span>
-        <p class="spotlight-block-body">Beneath the mercenary, beneath the swordsman — something far older and far less human than anyone on the squad ever guessed.</p>
-      </div>
-      <div>
-        <span class="spotlight-block-lbl">Reveal — Yami</span>
-        <span class="spotlight-block-title">A Gorma Tribe Descendant</span>
-        <p class="spotlight-block-body">The man who rebuilt the legacy of every past Sentai team turns out to carry the blood of one of their oldest enemies.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- VILLAIN -->
+  <!-- ANTAGONIST -->
   <div class="sh"><span class="sh-en">THE ANTAGONIST</span><span class="sh-jp">敵対者</span><span class="sh-line"></span></div>
   <div class="spotlight villain">
-    <div class="spotlight-watermark">絶</div>
+    <div class="spotlight-watermark">堕</div>
     <div class="spotlight-eyebrow">Former Squadmate · No Transformation</div>
     <span class="spotlight-jp">高橋 七海</span>
     <span class="spotlight-en">Nanami Takahashi</span>
-    <p class="spotlight-intro">Once one of them. Trained at SPD alongside Takeomi and Yami, she fought beside the squad through their mercenary days — until an injury on a job left her changed, and she began drifting from the others without ever fully explaining why. No one pushed. By the time anyone realized how far she'd gone, she was already gone for good.</p>
+    <p class="spotlight-intro">She was one of them, once — trained at SPD beside Takeomi and Yami, mercenary beside the rest of the squad through every job that came before the Moon. Something on one mission left her changed. Nobody knows exactly what happened, and she's never said. She just got quieter. Pulled back a little further each time. By the time anyone thought to ask if she was alright, she was already gone.</p>
     <div class="spotlight-cols">
       <div>
-        <span class="spotlight-block-lbl">Power Source</span>
-        <span class="spotlight-block-title">An Independent Dark Power</span>
-        <p class="spotlight-block-body">She holds no Sentai Core and undergoes no transformation — just an elite swordsman's skill, sharpened by something she found entirely on her own. Background note: she carries Zangyack heritage, though it plays no active role in the plot.</p>
+        <span class="spotlight-block-lbl">What She Really Is</span>
+        <span class="spotlight-block-title">A Fallen Gosei Angel</span>
+        <p class="spotlight-block-body">She wields no Sentai Core and undergoes no transformation — just a blade and a skill that was already formidable before whatever happened to her. The truth, revealed only at the cathedral, is that her power isn't borrowed or stolen at all. It's what's left of a celestial nature she lost long before the squad ever knew her — dimmed, darkened, but never fully extinguished.</p>
       </div>
       <div>
         <span class="spotlight-block-lbl">True Goal</span>
